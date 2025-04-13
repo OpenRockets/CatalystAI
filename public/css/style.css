@@ -1,0 +1,16 @@
+:root{
+    --defaultColorBg:#000711;
+    --defaultColorFont:#ffff;
+    --defaultColorFore:rgb(8, 8, 8);
+    --defaultColorInversedDark:rgb(23, 21, 59);
+    --defaultColorInversedLight:rgb(0, 24, 59);
+    --defaultColorwarnRed:#ff2b2b;
+    --defaultColorneonBlue:rgb(0, 155, 226);
+    --defaultColorneonPurple:rgb(219, 0, 226);
+    --defaultColorneonGreen:rgb(0, 231, 226);
+   
+   }
+
+body{
+    background-color: var(--defaultColorBg);
+}
