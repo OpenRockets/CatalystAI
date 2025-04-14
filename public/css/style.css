@@ -1,16 +1,45 @@
 :root{
     --defaultColorBg:#000711;
     --defaultColorFont:#ffff;
-    --defaultColorFore:rgb(8, 8, 8);
+    --defaultColorFore:rgb(24, 24, 24);
     --defaultColorInversedDark:rgb(23, 21, 59);
     --defaultColorInversedLight:rgb(0, 24, 59);
     --defaultColorwarnRed:#ff2b2b;
     --defaultColorneonBlue:rgb(0, 155, 226);
     --defaultColorneonPurple:rgb(219, 0, 226);
     --defaultColorneonGreen:rgb(0, 231, 226);
-   
+    --defaultColorBgHead:#000711c4;
    }
 
 body{
-    background-color: var(--defaultColorBg);
+
+    background-color:var(--defaultColorFore);
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.main{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1;
+}
+.header-main{
+    width: 100%;
+    height: 3.5rem;
+    background-color: var(--defaultColorBgHead);
+    border-bottom: .1rem solid white;
+}
+.Xlinear-XBDGDJSKGgikT{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: -1;
+    background-image: linear-gradient(65deg, rgb(2, 2, 2),rgb(0, 141, 206));
 }
