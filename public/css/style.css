@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 :root{
     --defaultColorBg:#000711;
     --defaultColorFont:#ffff;
@@ -14,6 +15,8 @@
 body{
 
     background-color:var(--defaultColorFore);
+    font-family: "Kanit", sans-serif;
+    font-weight: 400;
 }
 *{
     margin: 0;
@@ -33,13 +36,70 @@ body{
     background-color: var(--defaultColorBgHead);
     border-bottom: .1rem solid white;
 }
+.linear-ArrayOfColors{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    z-index: -1;
+    align-items: center;
+    position: fixed;
+}
 .Xlinear-XBDGDJSKGgikT{
+    filter: blur(200px) saturate(200%) ;
+}
+.Xlinear-XBDGDJSKGgikT:first-child{
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    z-index: -1;
+
     background-image: linear-gradient(65deg, rgb(2, 2, 2),rgb(0, 141, 206));
-}
+
+    animation: moveHorizontal 37s linear infinite;
+    }
+    .Xlinear-XBDGDJSKGgikT:nth-child(2){
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+    
+        background-image: linear-gradient(165deg, transparent,rgb(199, 0, 206));
+
+        animation: moveHorizontal 37s linear infinite;
+        }
+        .Xlinear-mask_97djkhdj3{
+            width:100%;
+            height: 100vh;
+            background-color: var(--defaultColorBg);
+            opacity: 90%;
+        }
+        .Xlinear-XBDGDJSKGgikT:nth-child(3){
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+        
+            background-image: linear-gradient(265deg, transparent,rgb(0, 228, 121));
+
+            animation: moveHorizontal 37s linear infinite;
+            }
+
+    @keyframes moveHorizontal {
+        0% {
+          transform: translateX(-50%) translateY(-10%) rotate(0deg);
+        }
+        50% {
+          transform: translateX(50%) translateY(10%) rotate(180deg);
+        }
+        100% {
+          transform: translateX(-50%) translateY(-10%) rotate(360deg);
+        }
+      }
+
