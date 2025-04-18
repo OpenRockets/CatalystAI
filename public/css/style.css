@@ -156,7 +156,7 @@ body{
     justify-content: center;
     align-items: center;
     margin-right: .5rem;
-
+  color: var(--defaultColorFont);
     
 
 }
@@ -480,7 +480,7 @@ body{
 
 }
 .optOutButtonMonotizeyui_ a{
-    width: 70%;
+    width: 80%;
 }
 .optOutButtonMonotizeyui_ a img{
     width:100%;
@@ -507,7 +507,7 @@ body{
     justify-content: center;
     align-items: center;
     background-color: var(--defaultColorBg);
-    border-radius: 1rem;
+    border-radius: 2rem;
     position: relative;
     overflow: hidden;
     
@@ -515,10 +515,10 @@ body{
 .chatInput-div::before {
     content: '';
     position: absolute;
-    width:  100%; /* Same as the element's width */
-    height: 100%; /* Same as the element's height */
+    width:  100%; 
+    height: 100%; 
     border: .1rem solid var(--defaultColorneonGreen);
-    border-radius: 1rem;
+    border-radius: 2rem;
     box-sizing: border-box;
     animation: border-animation01 4s linear infinite;
   }
@@ -602,16 +602,19 @@ body{
   }
   .chatInput-div-left .UYTdfgaddbtn svg{
     fill: var(--defaultColorFont);
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.3rem;
+    height: 1.3rem;
 
   }
   .chatInput-div-left .UYTdfgaddbtn {
-    width: 2rem;
-    height: 2rem;
+    width:  1.7rem;
+    height: 1.7rem;
+    padding: .3rem;
+    border-radius: .3rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
   .mainClass_xcvd01 {
     width: 100%;
@@ -632,11 +635,13 @@ body{
     justify-content: center;
     align-items: center;
     margin-left: 1rem;
+    padding: .3rem;
+    border-radius: .3rem;
 
 }
 .vrapi56 svg{
-    width:  1.3rem;
-    height: 1.3em;
+    width:  1.2rem;
+    height: 1.2em;
     fill: var(--defaultColorFont);
 
 }
@@ -646,7 +651,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left:1rem;
+    margin-left:2%;
+    padding: .3rem;
+    border-radius: .3rem;
 }
 .sendButtonDynamic svg{
     width: 1.5rem;
@@ -796,11 +803,10 @@ text-align: left;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 1rem;
+   
 }
 .chatBubble-button{
-    width: max-content;
-    height: max-content;
+    width: max-content; margin-top: 1rem;    height: max-content;
     font-size: 90%;
     display: flex;
     justify-content: center;
@@ -835,31 +841,38 @@ a{
     margin-bottom: 2rem;
 }
 .addedFiles_mediaProd{
+  width: max-content;
+  height: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: max-content;
-    height: max-content;
+
     
 }
 .addedFiles_mediaProd svg{
-    width: max-content;
-    height:100%;
+    width: 100%;
+    min-height:80%;
     fill: #ff2b2b;
 }
 .filecontmeasurerr_func_box{
-    width: max-content;
+    width: 100%;
     height: max-content;
     display: flex;
     justify-content: flex-start;
     align-items:flex-start;
     flex-direction: column;
+    color: var(--defaultColorFont);
+
 }
 .filecontmeasurerr_func_box span{
+    width: 2rem;
     font-size: 70%;
     cursor: default;
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  margin: 0;
 }
 .q0830_chatcONTETR_name_mes{
     font-weight: 700;
@@ -875,4 +888,17 @@ a{
     opacity: 70%;
     display: inline-block;
 
+}
+.backdeggft_catalystaiUI{
+  color: var(--defaultColorFont);
+  transition: 100ms;
+  cursor: default;
+     
+  background-color: var(--defaultColorInversedDark);
+}
+.verctorReburnUI{
+  -webkit-user-select: none; 
+  -moz-user-select: none;   
+  -ms-user-select: none;    
+   user-select: none;     
 }

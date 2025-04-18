@@ -52,6 +52,10 @@ function dynamicSideBar_02(dfg, dfg1H, addvg, gghyt, ythfg){
 
 document.addEventListener('DOMContentLoaded', function(){
     randomeIdeaGen();
+    $('html').on('contextmenu', function(eventH){
+        eventH.preventDefault();
+        
+    })
     dynamicSideBar_02()
 .then((response)=>{
     console.log(response);
@@ -146,3 +150,62 @@ $('.buttonDiv_cvx-cont').on('click', function () {
 //There should be a mode called "BookMode" right beneath chat bubbles to search for internet and think function
 
 // The colour of the filecontmeasurerr_func_box the icon should be changed as the media inserted to. PDF-red, Image - purple rtc.
+
+$('.verctorReburnUI').on('click', function(){
+    
+        $(this).toggleClass('backdeggft_catalystaiUI');
+        setTimeout(()=>{
+            $(this).removeClass('backdeggft_catalystaiUI');
+        },100)
+    
+    
+
+})
+var u76376Status = 0;
+function TypingGesturesAdd(div) {
+    u76376Status = u76376Status+1;
+    if(u76376Status ==1){
+
+    
+    $(div).parent().find('div').css({
+        'opacity':'100%',
+        'position':'relative',
+        'display':'inline-block'
+    })
+    let index = 0;
+    const text = $(div).html(); 
+    $(div).html(''); 
+
+    function readFrr() {
+        return Math.floor(Math.random() * 11) + 10; 
+    }
+
+
+
+
+    function innerFunc() {
+        if (index < text.length) {
+            $(div).html(text.substring(0, index + 1));
+            index++;
+            setTimeout(innerFunc, readFrr());
+        } else {
+            $(div).parent().find('div').css({
+                'opacity':'0%',
+                'position':'fixed'
+            });
+            u76376Status =0;
+            
+            
+        }
+       
+    }
+    innerFunc();
+    
+}
+else{
+    //donothing:)
+}
+}
+
+
+
