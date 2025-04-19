@@ -18,10 +18,16 @@
   },
   "homepage": "https://github.com/nekshadesilva/catalystai#readme",
   "dependencies": {
+    "@datastax/astra-db-ts": "^2.0.1",
     "@google/generative-ai": "^0.24.0",
-    "@pinecone-database/pinecone": "^5.1.1",
+    "@langchain/community": "^0.3.41",
+    "@langchain/core": "^0.3.45",
+    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "socket.io": "^4.8.1"
+    "langchain": "^0.3.23"
   }
 }

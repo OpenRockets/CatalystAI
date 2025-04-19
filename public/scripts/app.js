@@ -90,7 +90,7 @@ function randomeIdeaGen(){
         function writeit(text){
                 
                 function readFrr(){
-                    return Math.floor(Math.random()*51) + 50;
+                    return Math.floor(Math.random()*15) + 16;
                 }
                 
                 
@@ -206,6 +206,109 @@ else{
     //donothing:)
 }
 }
+function sendDtaGVectorDB(valueR, consType, pauseUntil){
+         valueR = $('.inputBoxChatInput-div').val();
+
+     function checkIn(){
+        
+     }
+ }
+// var chatObjectDynamic = {
+//     doc:{
+
+//     },
+//     C1:{
+//         userInput:'',
+//         chatOutput:''
+//     },
+//     C2:{
+        
+//     }
+    
+// }
+function fileUpload() {
+    const dynamicVirtualElemtN_Catalyst_eventhandle = $('<input>')
+      .attr('type', 'file')
+      .attr('accept',  'application/pdf');  // Ensure we accept only PDFs
+      
+    dynamicVirtualElemtN_Catalyst_eventhandle.on('change', async function (event) {
+      const file =     event.target.files[0];
+      if (!file) {
 
 
+        console.warn("User canceled file upload.");
+        return;
+      }
+  
+      // ✅ File selected
+      console.log("Selected file:", file.name);
+  
+      // Read the PDF file as ArrayBuffer
+      const fileReader = new FileReader();
 
+      //const //non need of useage
+
+      fileReader.onload = async function (e) {
+        const typedArray = new  Uint8Array(e.target.result); // Convert the ArrayBuffer to typed array
+  
+        // Load the PDF using pdf.js
+        try {
+          const pdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+          let fullText = '';
+            
+          // Extract text from each page
+          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ');
+            fullText += pageText + '\n\n';
+          }
+  
+          // Output the extracted text
+          console.log("Extracted Text from PDF:", fullText);
+          splitIntoChunkObject(text = fullText, chunkSize =555);
+        } catch (error) {
+          console.error("Error extracting text from PDF:", error);
+          
+        }
+      };
+  
+      fileReader.readAsArrayBuffer(file);  
+    });
+    function splitIntoChunkObject(text, chunkSize = 555) {
+  const words = text.split(/\s+/);
+  const chunkObject = {};
+
+  let chunkCount = 0;
+
+  for (let i = 0; i < words.length; i += chunkSize) {
+    const chunkWords = words.slice(i, i + chunkSize);
+    const chunkText = chunkWords.join(' ');
+
+    const pageNumber = getPageNumberFromChunk(chunkText); // optional
+    const wordCount = chunkWords.length;
+
+    // Format chunk ID like "chunk01", "chunk02", etc.
+    const chunkKey = `chunk${String(chunkCount + 1).padStart(2, '0')}`;
+
+    chunkObject[chunkKey] = {
+      text: chunkText,
+      pageNumber: pageNumber,
+      wordCount: wordCount
+    };
+
+    chunkCount++;
+  }
+  console.log(chunkObject)
+  return chunkObject;
+}
+
+// Optional page number extractor
+function getPageNumberFromChunk(chunk) {
+  const match = chunk.match(/-\s*(\d+)\s*-/); // example: "-- 78 --"
+  return match ? parseInt(match[1]) : null;
+}
+    // Trigger the file picker
+    dynamicVirtualElemtN_Catalyst_eventhandle.click();
+  }
+  

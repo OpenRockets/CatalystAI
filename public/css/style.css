@@ -212,6 +212,86 @@ body{
     border-radius: .5rem;
 
 }
+.ExamModeOnnerter-IntelligenceAI1{
+  width: max-content;
+  height: max-content;
+  padding: .2rem .5rem .2rem .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--defaultColorBg);
+  color: var(--defaultColorFont);
+  margin-left:2%;
+  
+  border-radius: .5rem;
+}
+.ExamModeOnnerter-IntelligenceAI1 span{
+    font-size: 100%;
+    color: var(--defaultColorFont);
+    margin-left: .5rem;
+    opacity: 80%;
+}
+.switch_UxSliderOnOffTruncterTRX {
+  position: relative;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1rem;
+}
+
+.switch_UxSliderOnOffTruncterTRX .UxSliderOnOffTruncterTRX { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider_UxSliderOnOffTruncterTRX {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--defaultColorFore);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider_UxSliderOnOffTruncterTRX:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width:  1rem;
+  left: 0px;
+  bottom: 0px;
+  background-color: var(--defaultColorFont);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.UxSliderOnOffTruncterTRX:checked + .slider_UxSliderOnOffTruncterTRX {
+  background-color: var(--defaultColorneonGreen);
+}
+
+.UxSliderOnOffTruncterTRX:focus + .slider_UxSliderOnOffTruncterTRX {
+  box-shadow: 0 0 1px var(--defaultColorneonGreen);
+}
+
+.UxSliderOnOffTruncterTRX:checked + .slider_UxSliderOnOffTruncterTRX:before {
+  -webkit-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.slider_UxSliderOnOffTruncterTRX.round_UxSliderOnOffTruncterTRX {
+  border-radius: 1rem;
+}
+.slider_UxSliderOnOffTruncterTRX.round_UxSliderOnOffTruncterTRX {
+  border-radius: 1rem;
+}
+
+.slider_UxSliderOnOffTruncterTRX.round_UxSliderOnOffTruncterTRX:before {
+  border-radius: 50%;
+}
 .header-button-dgfk span{
     font-size: 100%;
     color: var(--defaultColorFont);
@@ -507,7 +587,7 @@ body{
     justify-content: center;
     align-items: center;
     background-color: var(--defaultColorBg);
-    border-radius: 2rem;
+    border-radius: 1rem;
     position: relative;
     overflow: hidden;
     
@@ -518,7 +598,7 @@ body{
     width:  100%; 
     height: 100%; 
     border: .1rem solid var(--defaultColorneonGreen);
-    border-radius: 2rem;
+    border-radius: 1rem;
     box-sizing: border-box;
     animation: border-animation01 4s linear infinite;
   }
