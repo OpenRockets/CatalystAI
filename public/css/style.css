@@ -969,7 +969,7 @@ a{
     height: .7rem;
     background-color: var(--defaultColorFont);
     opacity: 70%;
-    display: inline-block;
+    display: inline-block !important;
 
 }
 .backdeggft_catalystaiUI{
