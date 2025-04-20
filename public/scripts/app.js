@@ -4,7 +4,29 @@ Licenced with Apache-2.0 contributor's license*/
 /*https://www.github.com/nekshadesilva/catalystai*/
 
 console.log('WORKING')
-
+function getCurrentTimestampFor_mainObject() {
+  const now = new Date();
+  return now.toISOString();
+  // Returns the timestamp in ISO 8601 format
+}
+function randomVarFactorGen(fValue, sValue){
+  fValue = Math.floor(Math.random()*29380237)
+  sValue =  Math.floor(Math.random()*73208392)
+  var finalVal = 'chat' + Math.floor(fValue* sValue / fValue/2);
+  return finalVal;
+}
+var MainObjectFields_withD ={};
+var currentRecurrentVARFactor = randomVarFactorGen();
+var currentDate = getCurrentTimestampFor_mainObject();
+var currentFactor_titieRWgen;
+var titleMainContextChatSummery;
+function genNewCapChat(){
+  MainObjectFields_withD[currentRecurrentVARFactor]={
+    title:titleMainContextChatSummery,
+    moment:currentDate,
+    chats:{}
+  }
+}
 function dynamicSideBar_02(dfg, dfg1H, addvg, gghyt, ythfg){
     function inerfunc(fd_status){
         $('.sidebarX').css({
@@ -308,7 +330,8 @@ function fileUpload() {
           metadata: {
             chunkKey: chunkKey,
             pageNumber: chunkData.pageNumber,
-            wordCount: chunkData.wordCount
+            wordCount: chunkData.wordCount,
+            chatKey:currentRecurrentVARFactor
           }
         })
       );
@@ -478,10 +501,12 @@ button.appendChild(buttonText);
 
 postDiv.appendChild(button);
 bubble.appendChild(postDiv);
-
+MainObjectFields_withD[currentRecurrentVARFactor].chats[
+  `.HTPS_div-user-chat-content-fxd${recurrentVariable_env_lopingPar}`
+] = contentFetched;
 chatContent.appendChild(bubble);
 //end-credit-functions
-
+//example: diverting the date to API
 
 }
 var intensityChatResponse = 100;
@@ -585,8 +610,11 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
 
   chatContentInnerCenDiv.appendChild(chatBubble);
   chatContent.appendChild(chatContentInnerCenDiv);
+  MainObjectFields_withD[currentRecurrentVARFactor].chats[
+    `.HTPS_div-bot-chat-content-fxd${recurrentVariable_env_lopingPar}`
+  ] = nativeOffer_dynamicrecurrentRetnOut;
   if(recurrentVariable_env_lopingPar == 1){
-    checkForIntenseQSummery();
+    checkForIntenseQSummery(textC = nativeOffer_dynamicrecurrentRetnOu);
   }
 
 }
@@ -622,9 +650,68 @@ function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, ret
 
 
 }
-function checkForIntenseQSummery(textData ){
-  ////This is just a simulation for now.
-  //needs to be updted with API #needstobeupdated
+
+function checkForIntenseQSummery(textC){
+  async function getChatTitle() {
+    const GEMINI_API_KEY = 'AIzaSyBT_pqqOPApf3v9KK5mTxtzAnZ3921R1wg';
+    const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + GEMINI_API_KEY;
   
+    const prompt = `Generate a short, 3–6 word title that summarizes the following paragraph:\n\n"${textC}"`;
   
+    try {
+      const response = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: prompt }],
+            },
+          ],
+        }),
+      });
+  
+      const data = await response.json();
+  
+      const title = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+  
+      // Check if Gemini gave a valid title
+      if (title && title.length > 0 && title.length < 60) {
+        return title;
+      } else {
+        return 'Untitled Chat';
+      }
+  
+    } catch (error) {
+      console.error('Gemini Title Error:', error);
+      return 'Untitled Chat';
+    }
+  }
+  
+  titleMainContextChatSummery  = getChatTitle();
+  console.log(titleMainContextChatSummery);
+  //callTheFunction
 }
+// var MainObjectFields_withD = {
+//   chatYUyuyhdjnd7744:{
+//     title:'Trying to learn new instruments in future..',
+//     file:'pdfText(whole)should be inserted here.',
+//     chats:{
+//       'HTPS_div-user-chat-content-fxd1':'HeyHowAreYou',
+//       'HTPS_div-bot-chat-content-fxd1':'Imfinethanksyou'
+//     },
+//     moment:'2025/09/17-09-08'
+//   },
+//   chatjYhkhhdgkjdhgd30839:{
+//     title:'Trying to learn new instruments in future..',
+//     file:'pdfText(whole)should be inserted here.',
+//     chats:{
+//       'HTPS_div-user-chat-content-fxd1':'HeyHowAreYou',
+//       'HTPS_div-bot-chat-content-fxd1':'Imfinethanksyou'
+//     },
+//      moment:'2025/09/17-09-08'
+//   }
+// }
+//preview usage of main chat storing object.
