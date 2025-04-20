@@ -432,7 +432,7 @@ fileName.className = 'q0830_chatcONTETR_name_mes';
 fileName.textContent = contextFileMt_name;
 
 const fileSize = document.createElement('span');
-fileSize.className = 'q0830_chatcONTETR_size_mes';
+fileSize.className = `q0830_chatcONTETR_size_mes`;
 fileSize.textContent = contextFileMt_size;
 
 fileText.appendChild(fileName);
@@ -448,7 +448,7 @@ bubble.appendChild(fileDiv);
 
 
 const messageDiv = document.createElement('div');
-messageDiv.className = 'recurrent_ChatContent_bubble';
+messageDiv.className = `recurrent_ChatContent_bubble HTPS_div-user-chat-content-fxd${recurrentVariable_env_lopingPar}`;
 
 const msgSpan = document.createElement('span');
 msgSpan.textContent = contentFetched;
@@ -585,10 +585,46 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
 
   chatContentInnerCenDiv.appendChild(chatBubble);
   chatContent.appendChild(chatContentInnerCenDiv);
+  if(recurrentVariable_env_lopingPar == 1){
+    checkForIntenseQSummery();
+  }
 
 }
 $('.chatBubble-button-deepthink').on('click', function(attr_intensity_reverted, textContextV){
   attr_intensity_reverted = $(this).attr('data-massIntensityThis');
   textContextV  = $(this).parent().parent().find('.recurrent_ChatContent_bubble span').html();
-  console.log(attr_intensity_reverted , textContextV)
+  console.log(attr_intensity_reverted , textContextV);
+  attr_intensity_reverted =+ 100; //adds up 100 intensity value to parameter variable on toop
+  callFunction_API_handle_langChain(intensityFeaturePI = attr_intensity_reverted, textContentF = textContextV);
+  $(this).removeClass('chatBubble-button-deepthink');
 })
+
+function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, returnValue){
+  //This is just a simulation for now.
+  //needs to be updted with API #needstobeupdated
+  //send intenstiyF to LangChain and things on that and then recieve the full data amount 
+
+  function sendBackata_simulation(){
+    //send TextContentF to the API and get the required prompt with more deep thinking.
+    return "Based on the paragraph you added, here's a more compromized versiion as optimised and very intelligent and deep dive into those information. Sigiri Kashyapa is a Sri Lnakan  old Kind who is known for his contributions towards variety of agrigutaral and other fields as well. However, it's essential to focus on wealth rather than procrastinating behavioural advancements happening nowadays.";
+
+  }
+  function boxCurrentState_retieval_gen(){
+    return "Finalyzing.."
+
+
+  }
+  function senBackIntensity_simulation(){
+    return intensityFeaturePI
+  }
+  dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut = sendBackata_simulation(), currentstateX = boxCurrentState_retieval_gen());
+  //there is more to add.
+
+
+}
+function checkForIntenseQSummery(textData ){
+  ////This is just a simulation for now.
+  //needs to be updted with API #needstobeupdated
+  
+  
+}
