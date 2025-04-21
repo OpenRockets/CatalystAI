@@ -21,12 +21,14 @@ var currentDate = getCurrentTimestampFor_mainObject();
 var currentFactor_titieRWgen;
 var titleMainContextChatSummery;
 function genNewCapChat(){
+  
   MainObjectFields_withD[currentRecurrentVARFactor]={
     title:titleMainContextChatSummery,
     moment:currentDate,
     chats:{}
   }
 }
+genNewCapChat();
 function dynamicSideBar_02(dfg, dfg1H, addvg, gghyt, ythfg){
     function inerfunc(fd_status){
         $('.sidebarX').css({
@@ -610,22 +612,36 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
 
   chatContentInnerCenDiv.appendChild(chatBubble);
   chatContent.appendChild(chatContentInnerCenDiv);
+
   MainObjectFields_withD[currentRecurrentVARFactor].chats[
     `.HTPS_div-bot-chat-content-fxd${recurrentVariable_env_lopingPar}`
   ] = nativeOffer_dynamicrecurrentRetnOut;
   if(recurrentVariable_env_lopingPar == 1){
-    checkForIntenseQSummery(textC = nativeOffer_dynamicrecurrentRetnOu);
+    console.log('sending started')
+    sendTextToGemini(textC = nativeOffer_dynamicrecurrentRetnOut).then((title) => {
+      console.log("Received title:", title);
+      // You can now use the title in the frontend
+  });
   }
 
 }
-$('.chatBubble-button-deepthink').on('click', function(attr_intensity_reverted, textContextV){
-  attr_intensity_reverted = $(this).attr('data-massIntensityThis');
-  textContextV  = $(this).parent().parent().find('.recurrent_ChatContent_bubble span').html();
-  console.log(attr_intensity_reverted , textContextV);
-  attr_intensity_reverted =+ 100; //adds up 100 intensity value to parameter variable on toop
+$('body').off('click', '.chatBubble-button-deepthink').on('click', '.chatBubble-button-deepthink', function(event) {
+  event.stopPropagation();
+  let attr_intensity_reverted = $(this).attr('data-massIntensityThis');
+  let textContextV = $(this).parent().parent().find('.recurrent_ChatContent_bubble span').html();
+  
+  console.log(intensityChatResponse, textContextV);
+
+  // Increase the intensity
+  intensityChatResponse += 100;
+  attr_intensity_reverted = intensityChatResponse;
+
+  // Call your function
   callFunction_API_handle_langChain(intensityFeaturePI = attr_intensity_reverted, textContentF = textContextV);
+
+  // Remove the class from the clicked element
   $(this).removeClass('chatBubble-button-deepthink');
-})
+});
 
 function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, returnValue){
   //This is just a simulation for now.
@@ -651,49 +667,30 @@ function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, ret
 
 }
 
-function checkForIntenseQSummery(textC){
-  async function getChatTitle() {
-    const GEMINI_API_KEY = 'AIzaSyBT_pqqOPApf3v9KK5mTxtzAnZ3921R1wg';
-    const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + GEMINI_API_KEY;
-  
-    const prompt = `Generate a short, 3–6 word title that summarizes the following paragraph:\n\n"${textC}"`;
-  
-    try {
-      const response = await fetch(GEMINI_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: prompt }],
-            },
-          ],
-        }),
+async function sendTextToGemini(textC) {
+  try {
+      const response = await fetch('/generate-title', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ textC: textC })
       });
-  
+
+      console.log('Request sent with textC:', textC);
+
       const data = await response.json();
-  
-      const title = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-  
-      // Check if Gemini gave a valid title
-      if (title && title.length > 0 && title.length < 60) {
-        return title;
-      } else {
-        return 'Untitled Chat';
-      }
-  
-    } catch (error) {
-      console.error('Gemini Title Error:', error);
+      console.log('Generated Title:', data.title);
+      return data.title;
+  } catch (error) {
+      console.error('Error fetching Gemini title:', error);
       return 'Untitled Chat';
-    }
   }
-  
-  titleMainContextChatSummery  = getChatTitle();
-  console.log(titleMainContextChatSummery);
-  //callTheFunction
 }
+
+// Example usage:
+
+
 // var MainObjectFields_withD = {
 //   chatYUyuyhdjnd7744:{
 //     title:'Trying to learn new instruments in future..',
