@@ -19,7 +19,7 @@ var MainObjectFields_withD ={};
 var currentRecurrentVARFactor = randomVarFactorGen();
 var currentDate = getCurrentTimestampFor_mainObject();
 var currentFactor_titieRWgen;
-var titleMainContextChatSummery;
+var titleMainContextChatSummery = 'Untitled Chat'
 function genNewCapChat(){
   
   MainObjectFields_withD[currentRecurrentVARFactor]={
@@ -185,6 +185,9 @@ $('body').on('click', '.verctorReburnUI', function () {
 });
 
 
+let hasRunInnterFunc_typingTitleEx = false;
+
+
 var u76376Status = 0;
 function TypingGesturesAdd(div) {
     u76376Status = u76376Status+1;
@@ -205,9 +208,6 @@ function TypingGesturesAdd(div) {
     }
 
 
-    let hasRunInnterFunc_typingTitleEx = false;
-
-
 
     function innerFunc() {
         if (index < text.length) {
@@ -223,21 +223,17 @@ function TypingGesturesAdd(div) {
             if(!MainObjectFields_withD[currentRecurrentVARFactor].title){
               //donothing
             }else{
-              function innterFunc() {
-                if (hasRunInnterFunc_typingTitleEx ==true){
-                  return;
-                } else{
-                  $('.trackName-currentChatDynamicvisual_Handler-1 span')
-                  .text(MainObjectFields_withD[currentRecurrentVARFactor].title);
               
-                TypingGesturesAdd(div = '.trackName-currentChatDynamicvisual_Handler-1 span');
-              
-                hasRunInnterFunc_typingTitleEx = true;
-                }
-              
-                
-                
-              }
+            function innterFunc() {
+             if (hasRunInnterFunc_typingTitleEx) return;
+
+            $('.trackName-currentChatDynamicvisual_Handler-1 span')
+              .text(MainObjectFields_withD[currentRecurrentVARFactor].title);
+
+            TypingGesturesAdd(div = '.trackName-currentChatDynamicvisual_Handler-1 span');
+
+            hasRunInnterFunc_typingTitleEx = true;
+            }
               innterFunc();
                console.log('title_executed');
             }
@@ -272,6 +268,9 @@ function sendDtaGVectorDB(valueR, consType, pauseUntil){
 //     }
     
 // }
+const chunkObject = {};
+      var ConvertedLangChainChapters;
+       var ConvertedLangChainChunks;
 function fileUpload() {
     const dynamicVirtualElemtN_Catalyst_eventhandle = $('<input>')
       .attr('type', 'file')
@@ -325,7 +324,6 @@ function fileUpload() {
     });
     function splitIntoChunkObject(text, chunkSize = 555) {
   const words = text.split(/\s+/);
-  const chunkObject = {};
 
   let chunkCount = 0;
 
@@ -350,6 +348,7 @@ function fileUpload() {
   }
   const chunkArrayForLangChain = Object.entries(chunkObject).map(
         ([chunkKey, chunkData]) => ({
+          type:'chunk',
           pageContent: chunkData.text, // This is what gets embedded
           metadata: {
             chunkKey: chunkKey,
@@ -360,8 +359,11 @@ function fileUpload() {
         })
       );
   console.log(chunkArrayForLangChain)
+  ConvertedLangChainChunks =  chunkArrayForLangChain;
+  
   return chunkArrayForLangChain;
-}
+}      
+      
     function readTextOpenTopicsMain(topicTetxx){
         
             const words = topicTetxx.split(/\s+/); // Split by whitespace
@@ -380,6 +382,7 @@ function fileUpload() {
                   const chapterContext = words.slice(start, end).join(' ');
             
                   TopicBasedQuery_CatalystDta[`chapter_${topicCount}`] = {
+
                     raw: chapterContext,
                     position: i
                   };
@@ -419,6 +422,7 @@ function fileUpload() {
                   else if (index === totalChapters - 1) section = "End of the given electronic document -- maybe the last page";
               
                   return {
+                    type:'topic',
                     pageContent: chapterData.raw,
                     metadata: {
                       chapterKey,
@@ -430,11 +434,13 @@ function fileUpload() {
               }
               
             console.log(convertChaptersToLangChainFormat(chapterObj = TopicBasedQuery_CatalystDta));
+            ConvertedLangChainChapters = convertChaptersToLangChainFormat(chapterObj = TopicBasedQuery_CatalystDta);
+
             return convertChaptersToLangChainFormat(chapterObj = TopicBasedQuery_CatalystDta);
             
           }
     
-       
+ 
 // Optional page number extractor
 function getPageNumberFromChunk(chunk) {
   const match = chunk.match(/-\s*(\d+)\s*-/); // example: "-- 78 --"
@@ -442,6 +448,7 @@ function getPageNumberFromChunk(chunk) {
 }
 
     dynamicVirtualElemtN_Catalyst_eventhandle.click();
+
   }
   
 function dynamicChatBubble_handelr_fcdn(contentFetched, docValidator, contextFileMt_size, contextFileMt_name){
@@ -531,6 +538,7 @@ MainObjectFields_withD[currentRecurrentVARFactor].chats[
 chatContent.appendChild(bubble);
 //end-credit-functions
 //example: diverting the date to API
+
 
 }
 var intensityChatResponse = 100;
@@ -736,3 +744,11 @@ async function sendTextToGemini(textC) {
 //   }
 // }
 //preview usage of main chat storing object.
+
+
+function sendFuncUserta_AInt(text_stremR){
+  if(chunkObject == null){//when pdf  not uploaded
+
+  }
+}
+

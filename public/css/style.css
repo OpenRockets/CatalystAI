@@ -968,7 +968,6 @@ a{
     width:  .7rem;
     height: .7rem;
     background-color: var(--defaultColorFont);
-    opacity: 70%;
     display: inline-block !important;
 
 }
