@@ -205,6 +205,8 @@ function TypingGesturesAdd(div) {
     }
 
 
+    let hasRunInnterFunc_typingTitleEx = false;
+
 
 
     function innerFunc() {
@@ -218,7 +220,27 @@ function TypingGesturesAdd(div) {
                 'position':'fixed'
             });
             u76376Status =0;
-            
+            if(!MainObjectFields_withD[currentRecurrentVARFactor].title){
+              //donothing
+            }else{
+              function innterFunc() {
+                if (hasRunInnterFunc_typingTitleEx ==true){
+                  return;
+                } else{
+                  $('.trackName-currentChatDynamicvisual_Handler-1 span')
+                  .text(MainObjectFields_withD[currentRecurrentVARFactor].title);
+              
+                TypingGesturesAdd(div = '.trackName-currentChatDynamicvisual_Handler-1 span');
+              
+                hasRunInnterFunc_typingTitleEx = true;
+                }
+              
+                
+                
+              }
+              innterFunc();
+               console.log('title_executed');
+            }
             
         }
        
@@ -619,8 +641,10 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
   if(recurrentVariable_env_lopingPar == 1){
     console.log('sending started')
     sendTextToGemini(textC = nativeOffer_dynamicrecurrentRetnOut).then((title) => {
-      console.log("Received title:", title);
-      // You can now use the title in the frontend
+      MainObjectFields_withD[currentRecurrentVARFactor].title = title;
+     console.log(MainObjectFields_withD);
+     
+     
   });
   }
 
