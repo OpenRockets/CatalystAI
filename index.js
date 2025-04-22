@@ -4,11 +4,11 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
-
+import { AstraDBVectorStore } from '@langchain/community/vectorstores/astradb';
 // LangChain & Gemini
 import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { PromptTemplate } from "@langchain/core/prompts";
-import { RunnableSequence } from 'langchain/schema/runnable';
+import { RunnableSequence } from '@langchain/core/runnables';
 
 const ASTRA_DB_COLLECTION = "pdfdatacatalyst"; 
 
@@ -41,6 +41,7 @@ const chatModel = new ChatGoogleGenerativeAI({
 const promptTemplate = PromptTemplate.fromTemplate(
     `Generate a short, catchy 3–6 word **plain text** title summarizing this paragraph. Return **only** the title — no markdown, no bullets:\n\n"{text}"`
   );
+
 
 // Chain
 const titleChain = RunnableSequence.from([
@@ -85,6 +86,127 @@ app.post('/generate-title', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+
+
+const embeddings = new GoogleGenerativeAIEmbeddings({
+  apiKey: process.env.GEMINI_API_KEY,
+  modelName: 'models/embedding-001', // Gemini 1.5 Flash supports this
+});
+
+await AstraDBVectorStore.fromTexts(
+  ["This is a sample."],
+  [{ source: "init" }],
+  embeddings,
+  {
+    token: process.env.ASTRA_DB_TOKEN,
+    endpoint: process.env.ASTRA_DB_ENDPOINT,
+    collection: "pdfdatacatalyst",
+    vector: {
+      dimension: 768
+    }
+  }
+);
+async function getVectorStore() {
+  return await AstraDBVectorStore.fromExistingIndex(embeddings, {
+    token: process.env.ASTRA_DB_TOKEN,
+    endpoint: process.env.ASTRA_DB_ENDPOINT,
+    collection: ASTRA_DB_COLLECTION, // <-- correct key
+  });
+}
+app.post('/upload', async (req, res) => {
+  try {
+    const { ConvertedLangChainChunks, ConvertedLangChainChapters } = req.body;
+    console.log("📥 Incoming request body:", JSON.stringify(req.body, null, 2));//checking
+    if (!ConvertedLangChainChunks || !ConvertedLangChainChapters) {
+      return res.status(400).json({ error: 'Chunks and topics are required.' });
+    }
+
+    const docs = [...ConvertedLangChainChunks, ...ConvertedLangChainChapters].map((item, i) => {
+  const text = typeof item === 'string' ? item : item.content || ''; // Safely get text from object
+  console.log(text);
+  console.log("🔍 Raw item:", item);
+  return {
+    pageContent: text,
+    metadata: {
+      chunkKey: `chunk-${i}`,
+      section: `section-${Math.floor(i / 5)}`,
+    },
+  };
+  
+});
+    const vectorStore = await getVectorStore();
+    await vectorStore.addDocuments(docs);
+
+    res.status(200).json({ message: 'Successfully uploaded chunks and topics to AstraDB.' });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: 'Failed to upload data to AstraDB.' });
+  }
+});
+app.post('/search', async (req, res) => {
+  try {
+    const { query } = req.body;
+    
+    if (!query) {
+      return res.status(400).json({ error: 'Query is required.' });
+    }
+
+    const vectorStore = await getVectorStore();
+
+    // Perform semantic search on the vector store
+    const results = await vectorStore.similaritySearch(query, 5);  // Adjust the number of results as needed
+
+    // Map the results to include metadata and content
+    const output = results.map(r => ({
+      pageContent: r.pageContent,
+      pageNumber: r.metadata?.pageNumber || null,
+      chunkKey: r.metadata?.chunkKey || null,
+      section: r.metadata?.section || null,
+      topic: r.metadata?.chapterKey || null,
+    }));
+
+    res.json(output); // Send the results back to the frontend
+    console.log(output);
+  } catch (err) {
+    console.error('Search error:', err);
+    res.status(500).json({ error: 'Search failed.' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

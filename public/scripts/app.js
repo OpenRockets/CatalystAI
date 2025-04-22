@@ -308,11 +308,26 @@ function fileUpload() {
             const pageText = textContent.items.map(item => item.str).join(' ');
             fullText += pageText + '\n\n';
           }
-  
+          
           // Output the extracted text
           console.log("Extracted Text from PDF:", fullText);
           splitIntoChunkObject(text = fullText, chunkSize =555);
           readTextOpenTopicsMain(topicTetxx = fullText);
+          async function uploadChunksAndTopics() {
+          const res = await fetch("http://localhost:3000/upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ConvertedLangChainChunks, ConvertedLangChainChapters })
+          });
+          console.log("🚀 Sending to backend:", {
+            ConvertedLangChainChunks,
+            ConvertedLangChainChapters
+          });
+          const data = await res.json();
+          alert(data.message || "Upload done");//sends final response  
+       
+        } 
+        uploadChunksAndTopics(); 
           
         } catch (error) {
           console.error("Error extracting text from PDF:", error);
@@ -506,7 +521,7 @@ messageDiv.className = `recurrent_ChatContent_bubble HTPS_div-user-chat-content-
 
 const msgSpan = document.createElement('span');
 msgSpan.textContent = contentFetched;
-
+sendFuncUserta_AInt(text_stremR = contentFetched);
 messageDiv.appendChild(msgSpan);
 
 bubble.appendChild(messageDiv);
@@ -749,6 +764,21 @@ async function sendTextToGemini(textC) {
 function sendFuncUserta_AInt(text_stremR){
   if(chunkObject == null){//when pdf  not uploaded
 
+  }else{
+    async function searchQuery() {
+      const query = text_stremR;
+
+      const res = await fetch("http://localhost:3000/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query })
+      });
+
+      const data = await res.json();
+
+      console.log(data);
+    }
+    searchQuery();
   }
 }
 
