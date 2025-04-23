@@ -2,7 +2,9 @@
 Originally created for CodeJAM 2025 Comp., Copyrights (c) University of Moratuwa, Sri Lanka.
 Licenced with Apache-2.0 contributor's license*/
 /*https://www.github.com/nekshadesilva/catalystai*/
-
+var contextFileMt_name = 'Untitled.pdf';
+var contextFileMt_size = '128.8';
+var docValidator = 0;
 console.log('WORKING')
 function getCurrentTimestampFor_mainObject() {
   const now = new Date();
@@ -228,7 +230,7 @@ function TypingGesturesAdd(div) {
              if (hasRunInnterFunc_typingTitleEx) return;
 
             $('.trackName-currentChatDynamicvisual_Handler-1 span')
-              .text(MainObjectFields_withD[currentRecurrentVARFactor].title);
+              .html(MainObjectFields_withD[currentRecurrentVARFactor].title);
 
             TypingGesturesAdd(div = '.trackName-currentChatDynamicvisual_Handler-1 span');
 
@@ -282,9 +284,13 @@ function fileUpload() {
 
 
         console.warn("User canceled file upload.");
+        docValidator =0;
         return;
       }
-  
+      docValidator =1 
+      icnVX_pathHandler_inputbar(show =1);
+      contextFileMt_size = Math.floor((file.size / (1024 * 1024)).toFixed(2)) + 'MB'; 
+      contextFileMt_name = file.name;
       // ✅ File selected
       console.log("Selected file:", file.name);
   
@@ -330,6 +336,7 @@ function fileUpload() {
         uploadChunksAndTopics(); 
           
         } catch (error) {
+          docValidator =0;
           console.error("Error extracting text from PDF:", error);
           
         }
@@ -466,7 +473,7 @@ function getPageNumberFromChunk(chunk) {
 
   }
   
-function dynamicChatBubble_handelr_fcdn(contentFetched, docValidator, contextFileMt_size, contextFileMt_name){
+function dynamicChatBubble_handelr_fcdn(contentFetched){
     var parentConetert =document.createElement('div');
     document.querySelector('.chatContent').append(parentConetert)
     parentConetert.className = 'chatContentCVX_block';
@@ -694,10 +701,10 @@ function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, ret
   //This is just a simulation for now.
   //needs to be updted with API #needstobeupdated
   //send intenstiyF to LangChain and things on that and then recieve the full data amount 
-
+  console.log(textContentF)
   function sendBackata_simulation(){
     //send TextContentF to the API and get the required prompt with more deep thinking.
-    return "Based on the paragraph you added, here's a more compromized versiion as optimised and very intelligent and deep dive into those information. Sigiri Kashyapa is a Sri Lnakan  old Kind who is known for his contributions towards variety of agrigutaral and other fields as well. However, it's essential to focus on wealth rather than procrastinating behavioural advancements happening nowadays.";
+    return "More Detaled: more in depth, more attarctive, more point out form more perfect more great more insightful";
 
   }
   function boxCurrentState_retieval_gen(){
@@ -705,12 +712,9 @@ function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, ret
 
 
   }
-  function senBackIntensity_simulation(){
-    return intensityFeaturePI
-  }
-  dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut = sendBackata_simulation(), currentstateX = boxCurrentState_retieval_gen());
+  // dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut = sendBackata_simulation(), currentstateX = boxCurrentState_retieval_gen());
   //there is more to add.
-
+  deepSearchEngineActivator_passmakeover(intense = intensityFeaturePI, UI_sendfunc_currentState = boxCurrentState_retieval_gen(), helpingText = sendBackata_simulation(), actText=textContentF);
 
 }
 
@@ -734,7 +738,49 @@ async function sendTextToGemini(textC) {
       return 'Untitled Chat';
   }
 }
+async function sendTextGeneral(responseXForm) {
+  try {
+      const response = await fetch('/general-postG', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ responseXForm: responseXForm })
+      });
 
+      console.log('Request sent with', responseXForm);
+
+      const data = await response.json();
+      console.log('Generated response:', data.resultX); 
+      console.log('Generated CurrentState', data.stateX);
+      dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut =data.resultX, currentstateX =data.stateX )
+      return data.resultX;
+  } catch (error) {
+      console.error('Error fetching Gemini response:', error);
+      return 'Untitled Chat';
+  }
+}
+
+function icnVX_pathHandler_inputbar(show){
+  if(show ==1){
+    $('.ConetntCreationKernalIdentifier_buildDeps').css({
+      'visibility':'visible',
+      'position':'relative'
+    });
+  }else{
+    $('.ConetntCreationKernalIdentifier_buildDeps').css({
+      'visibility':'hidden'
+      ,'position':'fixed'
+    })
+    docValidator = 0;
+  }
+
+
+}
+$('.ConetntCreationKernalIdentifier_buildDeps').on('click', function(){
+  icnVX_pathHandler_inputbar(show = 0);
+  docValidator =0;
+})
 // Example usage:
 
 
@@ -762,23 +808,42 @@ async function sendTextToGemini(textC) {
 
 
 function sendFuncUserta_AInt(text_stremR){
-  if(chunkObject == null){//when pdf  not uploaded
-
+  if(docValidator ==0){//when pdf  not uploaded
+    console.log('pdf not unploaded.');
+    console.log(text_stremR)
+    sendTextGeneral(responseXForm =text_stremR);
   }else{
-    async function searchQuery() {
-      const query = text_stremR;
-
-      const res = await fetch("http://localhost:3000/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query })
-      });
-
-      const data = await res.json();
-
-      console.log(data);
-    }
-    searchQuery();
+    console.log('pdf detected.')
   }
 }
+//DeepSearch Engine V1
+function deepSearchEngineActivator_passmakeover(intense ,UI_sendfunc_currentState, actText){
 
+deepSearchVal(actTextRet = actText, intenseRet = intense, UI_sendfunc_currentStateRet = UI_sendfunc_currentState)
+}
+async function deepSearchVal(actTextRet, intenseRet, UI_sendfunc_currentStateRet) {
+  try {
+    const response = await fetch('/deep-search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ actTextRet, intenseRet })
+    });
+
+    console.log('Request sent with', actTextRet, intenseRet);
+
+    const data = await response.json();
+    console.log('Generated response:', data.deepResponse);
+    const nativeOffer_dynamicrecurrentRetnOut = data.deepResponse;
+const currentstateX = UI_sendfunc_currentStateRet;
+
+dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut, currentstateX);
+ 
+
+    return data.deepResponse;
+  } catch (error) {
+    console.error('Error fetching Gemini response:', error);
+    return 'Failed Deep Search';
+  }
+}

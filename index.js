@@ -35,12 +35,12 @@ app.get('/', (req, res) => {
 const chatModel = new ChatGoogleGenerativeAI({
   model: 'models/gemini-1.5-flash', // Use 1.5 Flash
   apiKey: process.env.GEMINI_API_KEY,
-  maxOutputTokens: 256,
+  maxOutputTokens: 1000,
 });
 
 // Prompt Template
 const promptTemplate = PromptTemplate.fromTemplate(
-    `Generate a short, catchy 3–6 word **plain text** title summarizing this paragraph. Return **only** the title — no markdown, no bullets:\n\n"{text}"`
+    `Generate a short, catchy 3–4 word **plain text** title summarizing this paragraph. Return **only** the title — no markdown, no bullets:\n\n"{text}"`
   );
 
 
@@ -103,7 +103,7 @@ const embeddings = new GoogleGenerativeAIEmbeddings({
   try {
     const test3353 = await embeddings.embedQuery("Test vector");
     console.log("Vector length:", test3353.length); // should be 768
-
+    
     
   } catch (err) {
     console.error("💥 Startup vector init error:", err);
@@ -120,10 +120,12 @@ app.post('/upload', async (req, res) => {
     if (!ConvertedLangChainChunks || !ConvertedLangChainChapters) {
       return res.status(400).json({ error: 'Both chunks and topics are required.' });
     }
-
+    await collection.deleteMany({});
+     console.log("🧹 Cleared existing collection before inserting new documents.");
     const combinedDocs = [...ConvertedLangChainChunks, ...ConvertedLangChainChapters].map((item, index) => {
-      const isChunk = !!item.pageContent;
-      const text = isChunk ? item.pageContent : item;
+      const isChunk = item.metadata?.wordCount !== null && item.metadata?.wordCount !== undefined;
+    
+      const text = item.pageContent;
     
       const metadata = {
         type: isChunk ? "chunk" : "topic",
@@ -139,7 +141,7 @@ app.post('/upload', async (req, res) => {
     
       return {
         page_content: text,
-        metadata, // Embedded as an object
+        metadata,
       };
     });
     
@@ -152,8 +154,10 @@ app.post('/upload', async (req, res) => {
     }));
     
     // 🔁 Insert into Astra DB
+    
     (async () => {
       try {
+        
         const result = await collection.insertMany(docsWithVectors);
         console.log("✅ Documents inserted successfully:", result);
       } catch (error) {
@@ -173,7 +177,7 @@ app.post('/upload', async (req, res) => {
 
     // Perform the vector search
     const cursor = collection
-      .find({ "metadata.wordCount": { $ne: null }})
+      .find({ "metadata.type": "chunk"})
       .sort({ $vector: queryEmbedding }) 
       .includeSimilarity(true)
       .limit(3);
@@ -191,11 +195,99 @@ app.post('/upload', async (req, res) => {
   }
 });
 
+////////////////////////////////////////////////////////////////////////////
+const generalChatSeq = PromptTemplate.fromTemplate(
+  `You are a helpful and detailed AI assistant. When responding to a user's query, follow these formatting rules strictly:
+  
+  1. Write a very short **creative thinking state** phrase at the very beginning on a new line, wrapped like [[Thinking deeply...]].
+  2. Then write a detailed explanation with real-world examples.
+  3. Wrap all **proper names** (people, companies, places, animals, trees, buildings, etc.) in <span> tags. Example: <span>Colombo</span>
+  4. You MUST include at least ONE HTML link using <a href="...">...</a>. If no specific link is available, use a placeholder or relevant general site.
+     Example: <a href="https://en.wikipedia.org/wiki/Colombo">Learn more about Colombo</a>
+  
+  Only output plain text with (no classes no <p> tags, no styling). Only use <span> and <a> tags. Dont use any HTML tags to generate **creative thinking state**
+  
+  User Question:
+  {responseXForm}`
+  );
+  
+
+const generalChatHandle = RunnableSequence.from([
+  generalChatSeq,
+  chatModel,
+]);
+// Endpoint
+app.post('/general-postG', async (req, res) => {
+  const { responseXForm } = req.body;
+
+  try {
+    const result = await generalChatHandle.invoke({ responseXForm });
+
+    const content = result?.content || '';
+
+    // 🧠 Extract state message from [[...]]
+    const stateMatch = content.match(/\[\[(.*?)\]\]/);
+    const stateX = stateMatch ? stateMatch[1] : 'Generating...';
+
+    // 🧽 Clean the rest of the content after removing [[...]]
+    const cleanContent = content.replace(/\[\[.*?\]\]\s*/, '');
+    const resultX = cleanContent || 'Untitled Chat';
+
+    if (resultX.startsWith('*')) {
+      resultX = resultX.replace(/^\*\*?/, '').replace(/\*\*?$/, '').trim();
+    }
+    console.log("🧪 Cleaned resultX:", resultX);
+    // 🚀 Respond with both result and state
+    res.json({ resultX, stateX });
+
+  } catch (error) {
+    console.error('LangChain + Gemini Error:', error);
+    res.status(500).json({ resultX: 'Untitled Chat', stateX: 'Idle' });
+  }
+});
+
+//DeepThink EX-TOKN01
+const deepChatSeq = PromptTemplate.fromTemplate(
+  `You are a highly detailed assistant. The user is asking for a deep analysis.
+
+  1. The provided base content is:
+  {actTextRet}
+
+  2. The depth level or intensity of search is: {intenseRet}
+
+  Your task is to expand and dive deeper into the above content, adding bullet-point findings and related insights **without straying from the original topic**.
+
+  Use ONLY these formatting rules:
+  - Use <br> between bullet points.
+  - Wrap all proper names (people, companies, places, animals, scientific terms, books, etc.) in <span> tags.
+  - Do NOT use <a>, <b>, <i>, <p>, or any other tags.
+  -use only <br> tags when writing a list.
+
+  Begin below:
+  `)
+const deepChatHandle = RunnableSequence.from([
+  deepChatSeq,
+  chatModel,
+]);
 
 
+// Endpoint
+app.post('/deep-search', async (req, res) => {
+  const { actTextRet, intenseRet } = req.body;
+  console.log(actTextRet);
+  try {
+    const result = await deepChatHandle.invoke({ actTextRet, intenseRet });
 
+    const content = result?.content || '';
+    const cleanContent = content.replace(/\[\[.*?\]\]/, '').trim();
 
+    res.json({ deepResponse: cleanContent });
 
+  } catch (error) {
+    console.error('LangChain + Gemini Error:', error);
+    res.status(500).json({ deepResponse: 'Deep Search failed.' });
+  }
+});
 
 // const pageNumbers = topChunks.map(chunk => chunk.page);
 // const topicDocs = await collection.find({ type: 'topic' });

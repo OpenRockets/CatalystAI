@@ -909,7 +909,7 @@ a{
     text-decoration: none;
     color: var(--defaultColorFont);
     opacity: 90%;
-    background-color: var(--defaultColorForeXCVCENDIV);
+    background-color: var(--defaultColorInversedDark);
 }
 .chatBubble_payLoad-APP{
     width: 60%;
@@ -964,6 +964,12 @@ a{
     color: var(--defaultColorFont);
     margin-bottom: 1rem;
 }
+.recurrent_ChatContent_bubble span span{
+  text-decoration: none;
+  color: var(--defaultColorFont);
+  opacity: 90%;
+  background-color: var(--defaultColorForeXCVCENDIV);
+}
 .jfjYrtUJYFSRFrANDOMdivcATALYST{
     width:  .7rem;
     height: .7rem;
@@ -983,6 +989,10 @@ a{
   -moz-user-select: none;   
   -ms-user-select: none;    
    user-select: none;     
+}
+.ConetntCreationKernalIdentifier_buildDeps{
+  visibility: hidden;
+  position: fixed;
 }
 .ConetntCreationKernalIdentifier_buildDeps svg{
   animation: popUpFadeInOutAnim_openuse  2s linear infinite;
