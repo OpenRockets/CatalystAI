@@ -89,6 +89,17 @@ document.addEventListener('DOMContentLoaded', function(){
 .catch((error)=>{
     console.log(error);
 })
+$(".switch_UxSliderOnOffTruncterTRX").click(function () {
+  const $toggle = $(this);
+  
+  $toggle.toggleClass("activeP");
+ expertMode = $toggle.hasClass("activeP") ? 0:1;
+
+  $(".UxSliderOnOffTruncterTRX").val(expertMode);
+
+  console.log("Expert mode:", expertMode); 
+});
+
 })
 function randomeIdeaGen(){
     var obj = { }
@@ -206,7 +217,7 @@ function TypingGesturesAdd(div) {
     $(div).html(''); 
     console.log(div)
     function readFrr() {
-        return Math.floor(Math.random() * 21) + 20; 
+        return Math.floor(Math.random() * 5) + 6; 
     }
 
 
@@ -221,7 +232,13 @@ function TypingGesturesAdd(div) {
                 'opacity':'0%',
                 'position':'fixed'
             });
+
             u76376Status =0;
+            $('.endSlider_opper-buttons_chatbubble').css({
+              'visibility':'visible',
+              'position':'relative'
+            });
+            $('head style').remove();
             if(!MainObjectFields_withD[currentRecurrentVARFactor].title){
               //donothing
             }else{
@@ -483,7 +500,9 @@ chatContent.style.alignItems = 'flex-end';
 
 const bubble = document.createElement('div');
 bubble.className = 'chatBubble_payLoad-APP';
-
+MainObjectFields_withD[currentRecurrentVARFactor].chats[
+  `.userC${recurrentVariable_env_lopingPar}`
+] = contentFetched;
 
 const fileDiv = document.createElement('div');
 fileDiv.className = 'addedFiles_mediaProd';
@@ -557,20 +576,22 @@ bubble.appendChild(postDiv);
 MainObjectFields_withD[currentRecurrentVARFactor].chats[
   `.HTPS_div-user-chat-content-fxd${recurrentVariable_env_lopingPar}`
 ] = contentFetched;
+$('.popUploaderDynamic-chatwindow').remove();
 chatContent.appendChild(bubble);
 //end-credit-functions
 //example: diverting the date to API
 
 
 }
+
 var intensityChatResponse = 100;
 var recurrentVariable_env_lopingPar =0;
-function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut, currentstateX ) {
+function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut, currentstateX, similarityConf ) {
   recurrentVariable_env_lopingPar++
   const chatContent = document.querySelector('.chatContent');
   const chatContentInnerCenDiv  = document.createElement('div');
   chatContentInnerCenDiv.className = 'chatContentCVX_block';
-
+ 
   const chatBubble = document.createElement('div');
   chatBubble.className = 'chatBubble_payLoad-ATT';
 
@@ -664,7 +685,6 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
 
   chatContentInnerCenDiv.appendChild(chatBubble);
   chatContent.appendChild(chatContentInnerCenDiv);
-
   MainObjectFields_withD[currentRecurrentVARFactor].chats[
     `.HTPS_div-bot-chat-content-fxd${recurrentVariable_env_lopingPar}`
   ] = nativeOffer_dynamicrecurrentRetnOut;
@@ -677,7 +697,24 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
      
   });
   }
-
+  if(similarityConf === undefined || similarityConf ===null){
+    
+  //doNothing
+  }else{
+    const confidenceHandelerCont = document.createElement('div');
+  confidenceHandelerCont.className = 'confidenceHandelerElement verctorReburnUI';
+  const confidenceHandelerCont_span = document.createElement('span');
+  var similarityConfX  = similarityConf*100+'%';
+  confidenceHandelerCont_span.innerHTML = `Accuracy Score`;
+  const confidenceHandelerCont_inputWrapper = document.createElement('div')
+  confidenceHandelerCont_inputWrapper.className = 'confidenceHandelerElement_inputWrapper';
+  const confidenceHandelerCont_inputBar = document.createElement('div');
+    confidenceHandelerCont_inputBar.style.width = similarityConfX;
+    confidenceHandelerCont_inputWrapper.appendChild(confidenceHandelerCont_inputBar)
+    confidenceHandelerCont.appendChild(confidenceHandelerCont_inputWrapper);
+    confidenceHandelerCont.appendChild(confidenceHandelerCont_span)
+    endSlider.appendChild(confidenceHandelerCont);
+  }
 }
 $('body').off('click', '.chatBubble-button-deepthink').on('click', '.chatBubble-button-deepthink', function(event) {
   event.stopPropagation();
@@ -694,7 +731,12 @@ $('body').off('click', '.chatBubble-button-deepthink').on('click', '.chatBubble-
   callFunction_API_handle_langChain(intensityFeaturePI = attr_intensity_reverted, textContentF = textContextV);
 
   // Remove the class from the clicked element
+  $('<style>')
+  .prop('type', 'text/css')
+  .html('.chatInput-div::before { border: .15rem solid var(--defaultColorneonGreen) !important; }')
+  .appendTo('head');
   $(this).removeClass('chatBubble-button-deepthink');
+
 });
 
 function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, returnValue){
@@ -702,11 +744,6 @@ function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, ret
   //needs to be updted with API #needstobeupdated
   //send intenstiyF to LangChain and things on that and then recieve the full data amount 
   console.log(textContentF)
-  function sendBackata_simulation(){
-    //send TextContentF to the API and get the required prompt with more deep thinking.
-    return "More Detaled: more in depth, more attarctive, more point out form more perfect more great more insightful";
-
-  }
   function boxCurrentState_retieval_gen(){
     return "Finalyzing.."
 
@@ -714,7 +751,7 @@ function callFunction_API_handle_langChain(intensityFeaturePI, textContentF, ret
   }
   // dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut = sendBackata_simulation(), currentstateX = boxCurrentState_retieval_gen());
   //there is more to add.
-  deepSearchEngineActivator_passmakeover(intense = intensityFeaturePI, UI_sendfunc_currentState = boxCurrentState_retieval_gen(), helpingText = sendBackata_simulation(), actText=textContentF);
+  deepSearchEngineActivator_passmakeover(intense = intensityFeaturePI, UI_sendfunc_currentState = boxCurrentState_retieval_gen(), actText=textContentF);
 
 }
 
@@ -813,22 +850,35 @@ function sendFuncUserta_AInt(text_stremR){
     console.log(text_stremR)
     sendTextGeneral(responseXForm =text_stremR);
   }else{
-    console.log('pdf detected.')
+    console.log('pdf detected.');
+    sendTextDoc(responseXForm =text_stremR);
   }
 }
 //DeepSearch Engine V1
+var expertMode = 0;
 function deepSearchEngineActivator_passmakeover(intense ,UI_sendfunc_currentState, actText){
-
-deepSearchVal(actTextRet = actText, intenseRet = intense, UI_sendfunc_currentStateRet = UI_sendfunc_currentState)
+if(docValidator==0){
+  deepSearchVal(actTextRet = actText, intenseRet = intense, UI_sendfunc_currentStateRet = UI_sendfunc_currentState)
+  console.log(actText, 'Done in Send1-frontend')
+}else{
+  if(expertMode ==0){
+    deepSearchDoc(actTextRet =actText, intenseRet  =intense,  instructionR= 'detail')
+  }else{
+    deepSearchDoc(actTextRet =actText, intenseRet  =intense, instructionR = 'question')
+  }
+  
+}
 }
 async function deepSearchVal(actTextRet, intenseRet, UI_sendfunc_currentStateRet) {
   try {
+    console.log(actTextRet, 'Done in Send2-frontend')
     const response = await fetch('/deep-search', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ actTextRet, intenseRet })
+      
     });
 
     console.log('Request sent with', actTextRet, intenseRet);
@@ -845,5 +895,59 @@ dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut, currents
   } catch (error) {
     console.error('Error fetching Gemini response:', error);
     return 'Failed Deep Search';
+  }
+}
+  async function deepSearchDoc(actTextRet, intenseRet, instructionR) {
+    try {
+      console.log(actTextRet, 'Done in Send2-frontend')
+      const response = await fetch('/upload_deepdoc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ actTextRet, intenseRet,  instructionR})
+        
+      });
+  
+      console.log('Request sent with', actTextRet, intenseRet, instructionR);
+  
+      const data = await response.json();
+      console.log('Generated response:', data.deepResponse);
+      const respondedVal = data.deepResponse;
+      const similarityConfidenceX = data.similarityAverage
+  
+  dynamicChatBubble_handelr_chatBotQ( respondedVal,'Analyzing..',similarityConfidenceX);
+   
+  
+      return data.deepResponse;
+    } catch (error) {
+      console.error('Error fetching Gemini response:', error);
+      return 'Failed Deep Search';
+    }
+}
+
+
+
+
+
+async function sendTextDoc(responseXForm) {
+  try {
+      const response = await fetch('/doc-postG', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ responseXForm: responseXForm })
+      });
+
+      console.log('Request sent with', responseXForm);
+
+      const data = await response.json();
+      console.log('Generated response:', data.resultX); 
+      dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut =data.resultX, currentstateX ='Generating..' )
+      return data.resultX;
+  } catch (error) {
+      console.error('Error fetching Gemini response:', error);
+      return 'Untitled Chat';
   }
 }

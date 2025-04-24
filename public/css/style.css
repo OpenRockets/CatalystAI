@@ -55,8 +55,8 @@ body{
    filter: blur(120px) saturate(200%);
 }
 .Xlinear-XBDGDJSKGgikT:first-child{
-    width: 100%;
-    height: 100vh;
+    width:  30%;
+    height: 30vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,8 +67,8 @@ body{
     animation: moveHorizontal 37s linear infinite;
     }
     .Xlinear-XBDGDJSKGgikT:nth-child(2){
-        width: 100%;
-        height: 100vh;
+        width: 30%;
+        height: 30vh;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -85,8 +85,8 @@ body{
             opacity: 100%;
         }
         .Xlinear-XBDGDJSKGgikT:nth-child(3){
-            width: 100%;
-            height: 100vh;
+            width: 30%;
+            height: 30vh;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -267,7 +267,38 @@ body{
   -webkit-transition: .4s;
   transition: .4s;
 }
+.confidenceHandelerElement{
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top:.5rem ;
+  align-items: flex-start;
+}
+.confidenceHandelerElement span{
+  font-size:90%;
+  color: var(--defaultColorFont);
+  width: max-content;
+}
+.confidenceHandelerElement_inputWrapper{
+  width: 100%;
+  height: .5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 1rem;
+  background-color: var(--defaultColorwarnRed);
+  flex-direction: row;
+}
+.confidenceHandelerElement_inputWrapper div{
+  width: 0%;
+  transition: 100ms;
+  height: .5rem;
+  background-color: var(--defaultColorneonGreen);
+  border-radius: 1rem;
 
+}
 .UxSliderOnOffTruncterTRX:checked + .slider_UxSliderOnOffTruncterTRX {
   background-color: var(--defaultColorneonGreen);
 }
@@ -304,7 +335,7 @@ body{
 
 }
 .trackName-currentChatDynamicvisual_Handler-1{
-    width: max-content;
+    max-width: 100%;
     height: max-content;
     color: var(--defaultColorFont);
     font-size: 120%;
@@ -323,6 +354,8 @@ body{
 }
 .trackName-currentChatDynamicvisual_Handler-1 span{
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 /*MainContent*/
 .Xcontent{
@@ -597,10 +630,10 @@ body{
     position: absolute;
     width:  100%; 
     height: 100%; 
-    border: .1rem solid var(--defaultColorneonGreen);
+    border: 0;
     border-radius: 1rem;
     box-sizing: border-box;
-    animation: border-animation01 4s linear infinite;
+    animation: border-animation01 10s linear infinite;
   }
 
   @keyframes border-animation {
@@ -643,6 +676,7 @@ body{
     border:    .2rem solid transparent;
     border-top: .2rem solid var(--defaultColorFont); 
     border-radius: 50%;
+    visibility: hidden;
     animation: dynamic-spin 3s cubic-bezier(1, 0.1, 0.25, 1) infinite;
   }
 .spinner-outer092CatalystSpinner{
@@ -750,8 +784,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
-    position: fixed;
+
 
     
 }
@@ -883,7 +916,9 @@ text-align: left;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-   
+   /* TextUntilLoad_temp */
+   visibility: hidden;
+   position: fixed;
 }
 .chatBubble-button{
     width: max-content;    height: max-content;
@@ -966,6 +1001,7 @@ a{
 }
 .recurrent_ChatContent_bubble span span{
   text-decoration: none;
+  width: 100%;
   color: var(--defaultColorFont);
   opacity: 90%;
   background-color: var(--defaultColorForeXCVCENDIV);
