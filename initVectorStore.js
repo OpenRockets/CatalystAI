@@ -1,4 +1,4 @@
-// initVectorStore.js
+
 
 import dotenv from 'dotenv';
 import { AstraDBVectorStore } from '@langchain/community/vectorstores/astradb';

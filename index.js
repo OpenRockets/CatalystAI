@@ -583,7 +583,7 @@ const summerySysHandle = RunnableSequence.from([
 // Endpoint
 app.post('/summery-e', async (req, res) => {
   const {  noWords, finalityNumberOfResponsesBot, finalityNumberOfResponsesUser  } = req.body;
-  console.log('no of words 😁😁', noWords);
+  console.log('no of words', noWords);
   
   try {
     const formattedPrompt = await summerySys.format({

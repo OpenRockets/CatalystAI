@@ -314,7 +314,6 @@ function fileUpload() {
       icnVX_pathHandler_inputbar(show =1);
       contextFileMt_size = Math.floor((file.size / (1024 * 1024)).toFixed(2)) + 'MB'; 
       contextFileMt_name = file.name;
-      // ✅ File selected
       console.log("Selected file:", file.name);
   
       // Read the PDF file as ArrayBuffer
@@ -354,7 +353,7 @@ function fileUpload() {
             ConvertedLangChainChapters
           });
           const data = await res.json();
-          alert(data.message || "Upload done");//sends final response  
+         
        
         } 
         uploadChunksAndTopics(); 
@@ -956,7 +955,7 @@ async function sendTextDoc(responseXForm) {
 }
 
 function fcdnCall(){
-  //creteDynamicElements
+  
   $('.summaryContentExperimental_handleDiv').remove();
   function genNewCapChat(){
     hasRunInnterFunc_typingTitleEx = false;
@@ -1006,7 +1005,6 @@ function togglePasser_newPreviewCrea() {
     const chats = chat.chats || {};
     const title = chat.title || "New Chat";
 
-    // ✅ Get first 'bot-chat' content
     let botSummary = "";
     for (const key in chats) {
       if (key.includes("bot-chat")) {
@@ -1015,12 +1013,10 @@ function togglePasser_newPreviewCrea() {
       }
     }
 
-    // ✅ Clean and limit summary
+
     const botSummaryText = $("<div>").html(botSummary).text(); // remove tags
     const botSummaryX = botSummaryText.split(" ").slice(0, 5).join(" ") + "";
 
-    // ✅ Store original object safely in data attribute
-    
 
     const htmlBlock = $(`
       <div class="sideBarCVX-cendiv">
@@ -1095,7 +1091,6 @@ async function pushSearchSummery(noWords, finalityNumberOfResponsesUser , finali
 
     const data = await response.json();
     const coverageAsAPercentage = data.sumryX;
-    alert(data.sumryX);
     summeryLoggerInTheGood(coverge = coverageAsAPercentage);
 
     return data.sumryX;
