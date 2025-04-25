@@ -31,14 +31,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
-// LangChain Setup (Google Gemini model)
+
 const chatModel = new ChatGoogleGenerativeAI({
   model: 'models/gemini-1.5-flash', // Use 1.5 Flash
   apiKey: process.env.GEMINI_API_KEY,
   maxOutputTokens: 1000,
 });
 
-// Prompt Template
+
 const promptTemplate = PromptTemplate.fromTemplate(
     `Generate a short, catchy 3–4 word **plain text** title summarizing this paragraph. Return **only** the title — no markdown, no bullets:\n\n"{text}"`
   );
@@ -85,14 +85,14 @@ app.post('/generate-title', async (req, res) => {
   });
   
 
-// Start server
+
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 
 
 const embeddings = new GoogleGenerativeAIEmbeddings({
   apiKey: process.env.GEMINI_API_KEY,
-  modelName: 'models/embedding-001', // Gemini 1.5 Flash supports this
+  modelName: 'models/embedding-001', // Gemini 1.5 only in comp
   
 });
 (async () => {
@@ -153,7 +153,6 @@ app.post('/upload', async (req, res) => {
       $vector: vectors[i], // Must use `$vector` for Astra DB vector search
     }));
     
-    // 🔁 Insert into Astra DB
     
     (async () => {
       try {
@@ -168,7 +167,7 @@ app.post('/upload', async (req, res) => {
 
     console.log("Prepared docs to insert:", combinedDocs);
 
-    // Your working Astra insertMany logic
+
  
 
     console.log("✅ Inserted into Astra:");
@@ -334,30 +333,7 @@ app.post('/deep-search', async (req, res) => {
   }
 });
 
-// const pageNumbers = topChunks.map(chunk => chunk.page);
-// const topicDocs = await collection.find({ type: 'topic' });
-// const prompt = `
-// You are an assistant helping identify relevant topics for content chunks.
 
-// Given the following CHUNKS:
-// ${topChunks.map(c => `- ${c.text}`).join('\n')}
-
-// And the following TOPICS:
-// ${topicDocs.map(t => `- ${t.text}`).join('\n')}
-
-// Pick the most appropriate topic that covers most or all of the above chunks. 
-
-// Also, return the page numbers associated with the chunks: ${pageNumbers.join(', ')}.
-
-// Be concise but clear.
-// `;
-
-// const geminiResponse = await sendToGemini(prompt); // you'll use your function to call Gemini here
-// res.json({
-//   answer: geminiResponse.text,
-//   pageNumbers,
-//   topic: geminiResponse.extractedTopic // or however you parse it
-// });
 
 app.post('/upload_deepdoc', async (req, res) => {
   try {
@@ -388,7 +364,7 @@ app.post('/upload_deepdoc', async (req, res) => {
     const similarityScores = results.map(doc => doc.$similarity || 0);
     const avgSimilarity = similarityScores.reduce((sum, val) => sum + val, 0) / similarityScores.length;
 
-    // Send chunks to Gemini
+
     const geminiResponse = await handleDeepResponse(formattedChunks, intenseRet, instructionR, actTextRet);
 
     res.status(200).json({
@@ -493,10 +469,10 @@ app.post('/doc-postG', async (req, res) => {
   const { responseXForm } = req.body;
 
   try {
-    // 🔎 Embed the query to perform vector search
+    
     const queryEmbedding = await embeddings.embedQuery(responseXForm);
 
-    // 🔹 Get top 4 most similar "chunk" documents
+  
     const chunkCursor = collection
       .find({ "metadata.type": "chunk" })
       .sort({ $vector: queryEmbedding })
@@ -513,19 +489,18 @@ app.post('/doc-postG', async (req, res) => {
       `${doc.page_content}<br><span>Page ${doc.metadata?.pageNumber || 'N/A'}</span>`
     ).join('\n\n');
 
-    // 🔹 Get all "topic" documents
+  
     const topicCursor = await collection
       .find({ "metadata.type": "topic" });
 
     const topicResults = await topicCursor.toArray();
     const topicDta = topicResults.map(t => t.page_content).join(', ');
 
-    // 🧠 Call Gemini handler
+    
     const { stateX, resultX } = await handleDocGemini(chunkDta, topicDta, responseXForm);
 
     console.log("📄 Gemini Final Output:", resultX);
 
-    // 🚀 Respond to client
     res.json({ stateX, resultX });
 
   } catch (error) {
@@ -553,8 +528,8 @@ const docChatSeq = PromptTemplate.fromTemplate(`
   - Only use the content given. Do NOT hallucinate.
   - Start by answering {responseXForm} with the **most relevant** content from {chunkDta}.
   - After answering directly, elaborate with additional relevant points that align with the query using proper formatting.
-  - Construct responses by aligning related content across chunks. Do not mix unrelated content. Keep each paragraph coherent and based on user intent.
-
+  - Construct responses by aligning related content for the best answer(s) across chunks. Do not mix unrelated content. Keep each paragraph coherent and based on user intent.
+  
   📘 Content Chunks:
   {chunkDta}
 
@@ -586,256 +561,70 @@ const docChatSeq = PromptTemplate.fromTemplate(`
   }
   
 // Endpoint
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const deepDocSeq = PromptTemplate.fromTemplate(`
-//   You are a highly precise assistant designed to provide **deep, structured, and readable** insights.
   
-//   🧠 Input Details:
-//   - You are given 10 content chunks extracted from documents.
-//   - Each has a content and a page number.
-  
-//   🧱 FORMAT & STRUCTURE RULES:
-//   - Do NOT use <ol>, <ul>, <p>, <i>, or <a> tags.
-//   - Use <br> tags ONLY for paragraph breaks.
-//   - Use <b> to highlight subtopics.
-//   - Wrap all proper nouns in <span> tags.
-//   - Each statement must END with <span>Page {pageNumber}</span> from the source.
-//   - Only use the content given. Do NOT hallucinate.
-//   - Adjust detail level based on {intenseRet} (0-1000).
-  
-//   📘 Content Chunks:
-//   {chunkInput}
-  
-//   🔥 Intensity Level: {intenseRet}
-  
-//   Now begin your structured response:
-//   `);
-//use this code for debugging
-/*import express from 'express';
-import path from 'path';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
 
-// LangChain & Gemini
-import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
-import { AstraDBVectorStore } from '@langchain/community/dist/vectorstores/astra';
-import { PromptTemplate } from "@langchain/core/prompts";
-import { RunnableSequence } from 'langchain/schema/runnable';
+//Endover--------Deepsearch
 
-const ASTRA_DB_COLLECTION = "pdfdatacatalyst"; 
-
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, './public')));
-
-// Routes
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/index.html'));
-});
-
-// LangChain Setup (Google Gemini model)
-const chatModel = new ChatGoogleGenerativeAI({
-  model: 'models/gemini-1.5-flash', // Use 1.5 Flash
-  apiKey: process.env.GEMINI_API_KEY,
-  maxOutputTokens: 256,
-});
-
-// Prompt Template
-const promptTemplate = PromptTemplate.fromTemplate(
-    `Generate a short, catchy 3–6 word **plain text** title summarizing this paragraph. Return **only** the title — no markdown, no bullets:\n\n"{text}"`
-  );
-
-// Chain
-const titleChain = RunnableSequence.from([
-  {
-    text: (input) => input.textC, // Input mapping
-  },
-  promptTemplate,
+ const summerySys = PromptTemplate.fromTemplate(`
+  You are an intelligent academic analyzer. A user has uploaded a document and interacted with a chatbot (you) to learn from it.  
+   You are given: - The total number of words in the uploaded document: {noWords} - All the questions the user asked: {finalityNumberOfResponsesUser} - All the responses the chatbot gave: {finalityNumberOfResponsesBot}  
+  Your task is to:
+  1. Analyze the user queries and the bot responses together to determine how many **unique academic or topic-relevant words** are present. 
+  2. Guess, based on context, how likely it is that each word came from the original document. Use smart judgment — you don’t need to be exact, just use strong logical deduction. 
+  3. Calculate the percentage of words that reflect content or ideas likely covered in the original document (compared to {noWords}). 
+  4. Output **only the final percentage** (e.g., “68%”) — no explanation, no sentence — just the number followed by a percentage sign. 
+  5. Think deeply, and don’t just match words — consider the meaning, importance, and relevance of each point in relation to the document.  This percentage should represent **how much of the original document has likely been covered through this conversation**. `);  
+const summerySysHandle = RunnableSequence.from([
+  deepChatSeq,
   chatModel,
 ]);
 
+
 // Endpoint
-app.post('/generate-title', async (req, res) => {
-    const { textC } = req.body;
+app.post('/summery-e', async (req, res) => {
+  const {  noWords, finalityNumberOfResponsesBot, finalityNumberOfResponsesUser  } = req.body;
+  console.log('no of words 😁😁', noWords);
   
-    try {
-      const result = await titleChain.invoke({ textC });
-      console.log("📩 Received AI response:", result);
-  
-      // Extract clean title from AIMessage content
-      const content = result?.content || '';
-      const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
-  
-      // Prefer first line or first markdown bullet if present
-      let title = lines[0] || 'Untitled Chat';
-      if (title.startsWith('*')) {
-        title = title.replace(/^\*\*?/, '').replace(/\*\*?$/, '').trim();
-      }
-  
-      // Limit to 60 characters (your original check)
-      if (title.length > 60 || title.length === 0) {
-        title = 'Untitled Chat';
-      }
-  
-      res.json({ title });
-  
-    } catch (error) {
-      console.error('LangChain + Gemini Error:', error);
-      res.status(500).json({ title: 'Untitled Chat' });
-    }
-  });
-  
-
-// Start server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
-
-
-const embeddings = new GoogleGenerativeAIEmbeddings({
-  modelName: "models/embedding-001",
-  apiKey: process.env.GOOGLE_API_KEY,
-});
-
-export async function handleUserQuery(userQuery) {
-  // Connect to Astra Vector Store
-  const vectorStore = await AstraDBVectorStore.fromExistingIndex(embeddings, {
-    collectionName: ASTRA_DB_COLLECTION,
-    token: process.env.ASTRA_DB_TOKEN,
-    endpoint: process.env.ASTRA_DB_ENDPOINT,
-  });
-
-  // Embed query
-  const embeddedQuery = await embeddings.embedQuery(userQuery);
-
-  // Retrieve related chunks
-  const chunkResults = await vectorStore.similaritySearchVectorWithScore(embeddedQuery, 4, {
-    filter: { type: "chunk" },
-  });
-
-  // Retrieve related topics
-  const topicResults = await vectorStore.similaritySearchVectorWithScore(embeddedQuery, 2, {
-    filter: { type: "topic" },
-  });
-
-  const formattedPrompt = `
-User question: "${userQuery}"
-
-Here are the PDF content chunks:
-${chunkResults.map(
-  (r, i) => `Chunk ${i + 1} (Page ${r.metadata.pageNumber}):\n${r.pageContent}`
-).join("\n\n")}
-
-Here are the related topics:
-${topicResults.map((r, i) => `Topic ${i + 1}: ${r.pageContent}`).join("\n\n")}
-
-Using the information above, answer the question clearly. Mention the page number and topic if possible.
-`;
-
-  const response = await chatModel.call([
-    ["human", formattedPrompt],
-  ]);
-
-  return {
-    answer: response.content,
-    page: chunkResults[0]?.metadata?.pageNumber,
-    topic: topicResults[0]?.pageContent,
-  };
-}
-app.post('/upload-pdf-data', async (req, res) => {
-  const { pdfChunks = [], chatTopics = [] } = req.body;
-
-  // ✅ Check that both are arrays
-  if (!Array.isArray(pdfChunks) || !Array.isArray(chatTopics)) {
-    return res.status(400).json({
-      success: false,
-      error: 'Invalid input format. Expected "pdfChunks" and "chatTopics" to be arrays.',
-    });
-  }
-
   try {
-    const vectorStore = await AstraDBVectorStore.fromExistingIndex(embeddings, {
-      collectionName: ASTRA_DB_COLLECTION,
-      token: process.env.ASTRA_DB_TOKEN,
-      endpoint: process.env.ASTRA_DB_ENDPOINT,
+    const formattedPrompt = await summerySys.format({
+      noWords,
+      finalityNumberOfResponsesBot,
+      finalityNumberOfResponsesUser
+
     });
 
-    const documents = [];
+    const result = await chatModel.invoke(formattedPrompt);
 
-    // 🧩 PDF Chunks — embed as 'chunk'
-    for (const chunk of pdfChunks) {
-      documents.push({
-        pageContent: chunk.text,
-        metadata: {
-          ...chunk.metadata,
-          type: "chunk",
-        },
-      });
-    }
 
-    // 🧠 Chat Topics — embed as 'topic'
-    for (const topic of chatTopics) {
-      documents.push({
-        pageContent: topic.chapterName, // Or topic.title
-        metadata: {
-          ...topic.metadata,
-          type: "topic",
-        },
-      });
-    }
-
-    await vectorStore.addDocuments(documents);
-
-    res.json({ success: true, message: `${documents.length} documents uploaded.` });
+    const content = result?.content || '';
+    console.log(content);
+    res.json({ sumryX: content });
 
   } catch (error) {
-    console.error('Upload Error:', error);
-    res.status(500).json({ success: false, error: 'Upload failed.' });
+    console.error('LangChain + Gemini Error:', error);
+    res.status(500).json({ sumryX: 'Summerizing failed.' });
   }
 });
-app.post('/ask', async (req, res) => {
-  const { userQuery } = req.body;
 
-  try {
-    const response = await handleUserQuery(userQuery);
-    res.json(response); // send back { answer, page, topic }
-  } catch (error) {
-    console.error('Error handling query:', error);
-    res.status(500).json({ error: 'Failed to process user query' });
-  }
-}); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

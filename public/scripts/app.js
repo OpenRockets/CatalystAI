@@ -21,11 +21,12 @@ var MainObjectFields_withD ={};
 var currentRecurrentVARFactor = randomVarFactorGen();
 var currentDate = getCurrentTimestampFor_mainObject();
 var currentFactor_titieRWgen;
-var titleMainContextChatSummery = 'Untitled Chat'
+var titleMainContextChatSummery = 'New Chat'
 function genNewCapChat(){
   
   MainObjectFields_withD[currentRecurrentVARFactor]={
     title:titleMainContextChatSummery,
+    file:0,
     moment:currentDate,
     chats:{}
   }
@@ -89,15 +90,20 @@ document.addEventListener('DOMContentLoaded', function(){
 .catch((error)=>{
     console.log(error);
 })
-$(".switch_UxSliderOnOffTruncterTRX").click(function () {
-  const $toggle = $(this);
-  
-  $toggle.toggleClass("activeP");
- expertMode = $toggle.hasClass("activeP") ? 0:1;
+$(".UxSliderOnOffTruncterTRX").off("change").on("change", function () {
+  const $checkbox = $(this);
 
-  $(".UxSliderOnOffTruncterTRX").val(expertMode);
+  if (typeof docValidator !== 'undefined' && docValidator === 0) {
+    console.log('Expert mode not available');
+    $checkbox.prop("checked", false);
+    $checkbox.closest("label").removeClass("activeP");
+    expertMode = 0; 
+  } else {
+    const isChecked = $checkbox.is(":checked");
+    expertMode = isChecked ? 1 : 0;
+    $checkbox.closest("label").toggleClass("activeP", isChecked);
+  }
 
-  console.log("Expert mode:", expertMode); 
 });
 
 })
@@ -243,17 +249,17 @@ function TypingGesturesAdd(div) {
               //donothing
             }else{
               
-            function innterFunc() {
-             if (hasRunInnterFunc_typingTitleEx) return;
-
+            
+     if (hasRunInnterFunc_typingTitleEx) return;
+             hasRunInnterFunc_typingTitleEx = true;
             $('.trackName-currentChatDynamicvisual_Handler-1 span')
               .html(MainObjectFields_withD[currentRecurrentVARFactor].title);
 
             TypingGesturesAdd(div = '.trackName-currentChatDynamicvisual_Handler-1 span');
 
             hasRunInnterFunc_typingTitleEx = true;
-            }
-              innterFunc();
+            
+              
                console.log('title_executed');
             }
             
@@ -334,6 +340,7 @@ function fileUpload() {
           
           // Output the extracted text
           console.log("Extracted Text from PDF:", fullText);
+          MainObjectFields_withD[currentRecurrentVARFactor].file = fullText;
           splitIntoChunkObject(text = fullText, chunkSize =555);
           readTextOpenTopicsMain(topicTetxx = fullText);
           async function uploadChunksAndTopics() {
@@ -494,16 +501,12 @@ function dynamicChatBubble_handelr_fcdn(contentFetched){
     var parentConetert =document.createElement('div');
     document.querySelector('.chatContent').append(parentConetert)
     parentConetert.className = 'chatContentCVX_block';
-    
+    $('.mainClass_xcvd01').val('');
 const chatContent = parentConetert;
 chatContent.style.alignItems = 'flex-end';
 
 const bubble = document.createElement('div');
 bubble.className = 'chatBubble_payLoad-APP';
-MainObjectFields_withD[currentRecurrentVARFactor].chats[
-  `.userC${recurrentVariable_env_lopingPar}`
-] = contentFetched;
-
 const fileDiv = document.createElement('div');
 fileDiv.className = 'addedFiles_mediaProd';
 
@@ -609,7 +612,7 @@ function dynamicChatBubble_handelr_chatBotQ(nativeOffer_dynamicrecurrentRetnOut,
 
   const chatContentDiv = document.createElement('div');
   chatContentDiv.className = `recurrent_ChatContent_bubble HTPS_div-bot-chat-content-fxd${recurrentVariable_env_lopingPar}`;
-  chatContentDiv.setAttribute('onclick', "TypingGesturesAdd(div='.HTPS_div-bot-chat-content-fxd span')");
+  
 
   const messageSpan = document.createElement('span');
 
@@ -950,4 +953,227 @@ async function sendTextDoc(responseXForm) {
       console.error('Error fetching Gemini response:', error);
       return 'Untitled Chat';
   }
+}
+
+function fcdnCall(){
+  //creteDynamicElements
+  $('.summaryContentExperimental_handleDiv').remove();
+  function genNewCapChat(){
+    hasRunInnterFunc_typingTitleEx = false;
+    recurrentVariable_env_lopingPar =0 ;
+  currentRecurrentVARFactor = randomVarFactorGen();
+    MainObjectFields_withD[currentRecurrentVARFactor]={
+      title:titleMainContextChatSummery,
+      file:0,
+      moment:currentDate,
+      chats:{}
+    }
+    $('.trackName-currentChatDynamicvisual_Handler-1 span').text('New Chat');
+
+  }
+  genNewCapChat();
+togglePasser_newPreviewCrea();
+
+
+$('.chatContent').empty();
+docValidator=0;
+console.log('Expert mode not available');
+$('.UxSliderOnOffTruncterTRX').prop("checked", false);
+$('.UxSliderOnOffTruncterTRX').closest("label").removeClass("activeP");
+expertMode = 0; 
+
+intensityChatResponse = 100;
+const $newDiv = $("<div>", {
+  class: "popUploaderDynamic-chatwindow childelementYRRT"
+}).append($("<span>"))
+
+$(".chatWindow-display").append($newDiv);
+$('.ConetntCreationKernalIdentifier_buildDeps'),css({
+  'visibility':'hidden',
+  'position':'fixed'
+})
+dynamicSideBar_02();
+
+}
+function togglePasser_newPreviewCrea() {
+  const $sideBar = $(".sideBarCVX");
+  $sideBar.empty();
+  
+  const fragment = $(document.createDocumentFragment());
+
+  for (const chatID in MainObjectFields_withD) {
+    const chat = MainObjectFields_withD[chatID];
+    const chats = chat.chats || {};
+    const title = chat.title || "New Chat";
+
+    // ✅ Get first 'bot-chat' content
+    let botSummary = "";
+    for (const key in chats) {
+      if (key.includes("bot-chat")) {
+        botSummary = chats[key];
+        break;
+      }
+    }
+
+    // ✅ Clean and limit summary
+    const botSummaryText = $("<div>").html(botSummary).text(); // remove tags
+    const botSummaryX = botSummaryText.split(" ").slice(0, 5).join(" ") + "";
+
+    // ✅ Store original object safely in data attribute
+    
+
+    const htmlBlock = $(`
+      <div class="sideBarCVX-cendiv">
+        <div class="chatDiv-showerLIv">
+          <div class="box_kjhGIKYTigkg"></div>
+          <div class="chatDiv-showerLIv-indexer">
+            <span class="indexerElement_7786956">${title}</span>
+            <span class="indexerElement_8886956">${botSummaryX}</span>
+          </div>
+          <div class="buttonDiv_cvx-cont">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-clock-history" viewBox="0 0 16 16">
+              <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z"/>
+              <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
+              <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    `);
+
+    fragment.append(htmlBlock);
+  }
+
+  $sideBar.append(fragment);
+}
+//summerizePushFeature
+function callForPushSummary(){
+  function innerFunc(chatObject){
+    
+      const chats = chatObject.chats;
+      let userChatText = '';
+      let botChatText = '';
+    
+      for (const key in chats) {
+        if (key.startsWith('.HTPS') && key.includes('user-chat')) {
+          userChatText += chats[key] + ' ';
+        }
+        if (key.startsWith('.HTPS') && key.includes('bot-chat')) {
+          botChatText += chats[key] + ' ';
+        }
+      }
+    
+      return {
+        userChats: userChatText.trim(),
+        botChats: botChatText.trim()
+      };
+    }
+    
+
+  const chunkCount = Object.keys(chunkObject).filter(key => key.startsWith("chunk")).length;
+    console.log("Total chunks:", chunkCount);
+    const numberOfWordsInDoc = chunkCount*555;
+    const finalityResponseCout = innerFunc(chatObject = MainObjectFields_withD[currentRecurrentVARFactor]);
+    pushSearchSummery(noWords = numberOfWordsInDoc, finalityNumberOfResponsesUser = finalityResponseCout.userChats, finalityNumberOfResponsesBot = finalityResponseCout.botChats)
+
+  }
+async function pushSearchSummery(noWords, finalityNumberOfResponsesUser , finalityNumberOfResponsesBot) {
+  
+  try {
+    
+    const response = await fetch('/summery-e', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ noWords, finalityNumberOfResponsesBot, finalityNumberOfResponsesUser })
+      
+    });
+
+    console.log('Request sent with', noWords, finalityNumberOfResponsesBot, finalityNumberOfResponsesUser);
+
+    const data = await response.json();
+    const coverageAsAPercentage = data.sumryX;
+    alert(data.sumryX);
+    summeryLoggerInTheGood(coverge = coverageAsAPercentage);
+
+    return data.sumryX;
+  } catch (error) {
+    console.error('Error fetching Gemini response:', error);
+    return 'Failed summerizing';
+  }
+}
+function summeryLoggerInTheGood(coverge){
+  addCompletionPercentage(coverge)
+  function addCompletionPercentage(percentage) {
+    const chatWindow = document.querySelector(".chatWindow-display");
+  
+    if (!chatWindow) {
+      console.error("chatWindow-display element not found.");
+      return;
+    }
+  
+    const html = `
+      <div class="popUploaderDynamic-chatwindow childelementYRRT"> 
+        <div class="summaryContentExperimental_handleDiv">
+          <div class="summaryContentExperimental_handleDiv_left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+              <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+            </svg>
+            <div>Document Completion:</div>
+            <h4>Calculation Based on your provided document, as a percentage.</h4>
+          </div>
+          <div class="summaryContentExperimental_handleDiv_right">
+            <div>
+              ${percentage}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  
+    chatWindow.innerHTML = html;
+  }
+  
+}
+function downloadJSON(data, filename = "data.json") {
+  const jsonStr = JSON.stringify(data, null, 2); 
+  const blob = new Blob([jsonStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url); // Cleanup
+}
+function sendMessage(){
+
+  
+    const valuex = $('.mainClass_xcvd01').val();
+    dynamicChatBubble_handelr_fcdn(contentFetched = valuex);
+
+  
+
+}
+
+  let toggleStateForNewChatToggle = false;
+function newChatBtnClick(){
+  if(docValidator == 0){
+    fcdnCall()
+  }else{
+    if (toggleStateForNewChatToggle) {
+    fcdnCall();
+    
+  } else {
+    callForPushSummary()
+    downloadJSON(MainObjectFields_withD, 'Data.json')
+  }
+  toggleStateForNewChatToggle = !toggleStateForNewChatToggle; 
+
+  }
+
+  
 }

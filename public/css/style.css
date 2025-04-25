@@ -38,7 +38,7 @@ body{
     height: max-content;
     display: flex;
     justify-content: center;
-    color: white;
+    color: var(--defaultColorFont);
     margin:1.2rem 0 .5rem 0;
     align-items: center;
 }   
@@ -74,7 +74,7 @@ body{
         align-items: center;
         position: fixed;
     
-        background-image: linear-gradient(165deg, rgb(0, 255, 149), black);
+        background-image: linear-gradient(165deg, var(--defaultColorneonGreen), var(--defaultColorBg));
 
         animation: moveHorizontal 37s linear infinite;
         }
@@ -350,7 +350,7 @@ body{
     width: 1rem;
     height: 1rem;
 
-    background-color: white
+    background-color:var(--defaultColorFont);
 }
 .trackName-currentChatDynamicvisual_Handler-1 span{
     white-space: nowrap;
@@ -439,7 +439,7 @@ body{
     width: 100%;
     height: 80%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     flex-direction: column-reverse;
     align-items: center;
     padding-top: 1rem;
@@ -468,7 +468,7 @@ body{
     width: 100%;
     height: max-content;
     display: flex;
-    
+    overflow: hidden;
    
     justify-content: flex-start;
     align-items: center;
@@ -498,12 +498,13 @@ body{
 
 }
 .chatDiv-showerLIv-indexer{
-    max-width: 80%;
+    width: 100%;
     height: max-content;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    overflow: hidden;
     padding-left: .2rem;
     color: var(--defaultColorFont);
     padding: .3rem .3rem .3rem .3rem;
@@ -537,7 +538,7 @@ body{
     flex-direction: column;
 }
 .buttonDiv_cvx-cont{
-    width: 100%;
+    width: max-content;
     height: max-content;
     display: flex;
     justify-content:flex-end;
@@ -560,7 +561,7 @@ body{
     font-size: 120%;
     white-space: nowrap;
     font-weight: 600;
-    margin-top: 2rem;
+    margin-top: .5rem;
     opacity: 90%;
 }
 .sideBarCVXb{
@@ -610,6 +611,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    
     height: 90%;
     
 }
@@ -779,7 +781,7 @@ body{
     height: 90%;
     top: 0;
     position: absolute;
-
+  flex-direction: column;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
@@ -998,6 +1000,7 @@ a{
 .recurrent_ChatContent_bubble{
     color: var(--defaultColorFont);
     margin-bottom: 1rem;
+    overflow: hidden;
 }
 .recurrent_ChatContent_bubble span span{
   text-decoration: none;
@@ -1040,4 +1043,94 @@ a{
     }
 
     
+}
+.ThemeControllerrectPassDiv{
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  justify-content: flex-end;
+
+  align-items: center;
+
+
+}
+.ThemeControllerrectPassDiv svg{
+  max-width:  1.5rem;
+  max-height: 1.5rem;
+  border-radius: .2rem;
+  padding: .3rem;
+  fill: var(--defaultColorFont);
+  margin-top: 2rem;
+}
+.sideBarCVX-cendiv:last-child .buttonDiv_cvx-cont svg{
+  visibility: hidden;
+}
+.summaryContentExperimental_handleDiv{
+  width: max-content;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  overflow: hidden;
+  background-color: var(--defaultColorFont);
+  color: var(--defaultColorBg);
+  border-radius: 1rem;
+  box-shadow: 0px 0px 10px 0px var(--defaultColorBgHead);
+}
+.summaryContentExperimental_handleDiv_left{
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction:column;
+  padding-left: 1rem;
+
+}
+.summaryContentExperimental_handleDiv_right{
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex-direction:column;
+  padding-right: 1rem;
+
+}
+.summaryContentExperimental_handleDiv_left div{
+  font-size: 130%;
+  font-weight: 600;
+  color: var(--defaultColorBg);
+  margin-bottom: .5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+}
+.summaryContentExperimental_handleDiv_left h4{
+  font-size: 100%;
+  font-weight: 500;
+  color: var(--defaultColorBg);
+  opacity: 80%;
+
+  white-space: pre-line;
+}
+.summaryContentExperimental_handleDiv_left svg{
+  width:  3rem;
+  height: 3rem;
+  fill: var(--defaultColorBg);
+  margin-right: .5rem;
+  fill: var(--defaultColorneonGreen);
+}
+.summaryContentExperimental_handleDiv_right div{
+  font-size: 200%;
+  font-weight: 600;
+  color: var(--defaultColorBg);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
