@@ -131,6 +131,7 @@ CatalystAI will evolve into a **research-centric co-pilot** with the following c
 - **Dynamic Curriculum Engine** that builds personalized learning goals from documents.
 
 ---
+<a href="https://ibb.co/39kL00T9"><img src="https://i.ibb.co/39kL00T9/Screenshot-2025-05-01-085907.png" alt="Screenshot-2025-05-01-085907" border="0"></a>
 
 ## License  
 **Apache-2.0 — Contributor’s License Edition**  
