@@ -8,11 +8,12 @@ CatalystAI 2025 is a cutting-edge AI-assisted academic reasoning framework, purp
 
 This framework is not a chatbot. It is an **autonomous academic engine** capable of cross-referencing documents, scoring understanding, generating expert-level questioning, and producing structured session archives for revision, research, and model training.
 #Demo
-<a href="https://drive.google.com/file/d/1nT4wa5c28xp8QVmRN8GQs-ZuFF2jhZgP/view?usp=sharing">Features: Query oriented answers, Document  Completiton Score</a>
-<a href="https://drive.google.com/file/d/1HPPhWvQlRaYS4zNnUIXwesBgZ_qaoUJ_/view?usp=sharing">Features: Accuracy Score</a>
-<a href="https://drive.google.com/file/d/1AVIsoWPNTmakMTqOevCPqzipOhaFjRuD/view?usp=sharing">Features: Deep search feature, Expert Mode</a>
-<a href="https://drive.google.com/file/d/1NuXdFt5Yl9K6VeAQXoWD8eE_0Tbn12yZ/view?usp=sharing">Features: Web search, Document search override</a>
-<a href="https://drive.google.com/file/d/1ZmCEBsfmSXqTUi-FMdoxYkm1P1GLItBy/view?usp=sharing">Features: Web search, JSON Exporting, Chat Exporting ability</a>
+<br>
+<a href="https://drive.google.com/file/d/1nT4wa5c28xp8QVmRN8GQs-ZuFF2jhZgP/view?usp=sharing">Features: Query oriented answers, Document  Completiton Score</a><br>
+<a href="https://drive.google.com/file/d/1HPPhWvQlRaYS4zNnUIXwesBgZ_qaoUJ_/view?usp=sharing">Features: Accuracy Score</a><br>
+<a href="https://drive.google.com/file/d/1AVIsoWPNTmakMTqOevCPqzipOhaFjRuD/view?usp=sharing">Features: Deep search feature, Expert Mode</a><br>
+<a href="https://drive.google.com/file/d/1NuXdFt5Yl9K6VeAQXoWD8eE_0Tbn12yZ/view?usp=sharing">Features: Web search, Document search override</a><br>
+<a href="https://drive.google.com/file/d/1ZmCEBsfmSXqTUi-FMdoxYkm1P1GLItBy/view?usp=sharing">Features: Web search, JSON Exporting, Chat Exporting ability</a><br>
 
 ---
 
