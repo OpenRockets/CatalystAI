@@ -155,3 +155,5 @@ Colombo, Sri Lanka
 
 CatalystAI is not just a document assistant.  
 It is a **scalable academic intelligence engine — capable of learning, reasoning, and teaching**.
+
+<a href="https://openrockets.me/v/2025"><img src="https://openrockets.me/v/gitstarts2025v.png"></a>
